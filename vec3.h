@@ -232,33 +232,12 @@ static inline float vec3_dis(const vec3 v0, const vec3 v1) {
     return (sqrt(pow(v0.x - v1.x, 2.0) + pow(v0.y - v1.y, 2.0) + pow(v0.z - v1.z, 2.0)));
 }
 
-static inline float vec3_mag(const vec3 v0) {
+static inline float vec3_len(const vec3 v0) {
     return (sqrt(pow(v0.x, 2.0) + pow(v0.y, 2.0) + pow(v0.z, 2.0)));
 }
 
 static inline float vec3_dot(const vec3 v0, const vec3 v1) {
     return (v0.x * v1.x + v0.y * v1.y + v0.z * v1.z);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static inline vec3 vec3_dir(const vec3 v0, const vec3 v1) {
-    vec3 vec;
-    float mag;
-
-    vec = vec3_sub(v0, v1);
-    mag = vec3_mag(vec);
-    return (vec3_init(vec.x / mag, vec.y / mag, vec.z / mag));
-}
-
-static inline float vec3_ang(const vec3 v0, const vec3 v1) {
-    float dot,
-          mag0, mag1;
-
-    dot = vec3_dot(v0, v1);
-    mag0 = vec3_mag(v0);
-    mag1 = vec3_mag(v1);
-    return (acos(dot / (mag0 * mag1)));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

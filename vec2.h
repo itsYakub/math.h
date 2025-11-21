@@ -222,7 +222,7 @@ static inline float vec2_dis(const vec2 v0, const vec2 v1) {
     return (sqrt(pow(v0.x - v1.x, 2.0) + pow(v0.y - v1.y, 2.0)));
 }
 
-static inline float vec2_mag(const vec2 v0) {
+static inline float vec2_len(const vec2 v0) {
     return (sqrt(pow(v0.x, 2.0) + pow(v0.y, 2.0)));
 }
 
@@ -232,16 +232,6 @@ static inline float vec2_dot(const vec2 v0, const vec2 v1) {
 
 static inline float vec2_det(const vec2 v0, const vec2 v1) {
     return (v0.x * v1.y + v0.y * v1.x);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static inline vec2 vec2_dir(const vec2 v0, const vec2 v1) {
-    return (vec2_init(cos(atan2(v0.y - v1.y, v0.x - v1.x)) * -1.0, sin(atan2(v0.y - v1.y, v0.x - v1.x)) * -1.0));
-}
-
-static inline float vec2_ang(const vec2 v0, const vec2 v1) {
-    return (atan2(vec2_dot(v0, v1), vec2_det(v0, v1)));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
