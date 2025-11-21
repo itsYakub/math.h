@@ -1,5 +1,5 @@
 /*
- *  math.h - C/C++ math API
+ *  math.h - C/C++ header-only math API
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -11,5 +11,6 @@
 #
 # include "./common.h"
 # include "./vec2.h"
+# include "./vec3.h"
 #
 #endif /* _math_h_ */
