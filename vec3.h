@@ -243,7 +243,7 @@ static inline float vec3_dot(const vec3 v0, const vec3 v1) {
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline const char *vec3_string(const vec3 v0) {
-    static char buf[128];
+    static char buf[1024];
 
     if (!memset(buf, 0, sizeof(buf))) { return (0); }
     if (!snprintf(buf, sizeof(buf) - 1, "%f, %f, %f", v0.x, v0.y, v0.z)) { return (0); }

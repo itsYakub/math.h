@@ -237,7 +237,7 @@ static inline float vec2_det(const vec2 v0, const vec2 v1) {
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline const char *vec2_string(const vec2 v0) {
-    static char buf[128];
+    static char buf[1024];
 
     if (!memset(buf, 0, sizeof(buf))) { return (0); }
     if (!snprintf(buf, sizeof(buf) - 1, "%f, %f", v0.x, v0.y)) { return (0); }
