@@ -162,6 +162,10 @@ static inline float vec2_det(const vec2 v0, const vec2 v1) { return (v0.x * v1.y
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static inline const float *vec2_ptr(const vec2 *v0) { return (&v0->x); }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static inline const char *vec2_string(const vec2 v0) {
     static char buf[1024];
 

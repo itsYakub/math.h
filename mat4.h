@@ -159,6 +159,24 @@ const static inline mat4& operator *= (mat4 &v0, const mat4 &v1) { v0 = mat4_mul
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static inline bool mat4_equals(const mat4 m0, const mat4 m1) {
+    return (vec4_equals(m0.m0, m1.m0) &&
+            vec4_equals(m0.m1, m1.m1) &&
+            vec4_equals(m0.m2, m1.m2) &&
+            vec4_equals(m0.m3, m1.m3));
+}
+
+# if defined (__cplusplus)
+#  if !defined (MATH_DISABLE_CPP_OPERATORS)
+
+static inline bool operator == (const mat4 &m0, const mat4 &m1) { return (mat4_equals(m0, m1)); }
+static inline bool operator != (const mat4 &m0, const mat4 &m1) { return (!mat4_equals(m0, m1)); }
+
+#  endif /* MATH_DISABLE_CPP_OPERATORS */
+# endif /* __cplusplus */
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static inline mat4 mat4_ortho(const float left, const float right, const float top, const float down, const float near, const float far) {
     mat4 mat = mat4_zero();
     mat.m00  = 2.0 / (right - left);
@@ -188,24 +206,6 @@ static inline mat4 mat4_persp(const float fieldOfView, const float aspect, const
     float right = top * aspect;
     return (mat4_frust(-right, right, top, -top, near, far));
 }
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static inline bool mat4_equals(const mat4 m0, const mat4 m1) {
-    return (vec4_equals(m0.m0, m1.m0) &&
-            vec4_equals(m0.m1, m1.m1) &&
-            vec4_equals(m0.m2, m1.m2) &&
-            vec4_equals(m0.m3, m1.m3));
-}
-
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline bool operator == (const mat4 &m0, const mat4 &m1) { return (mat4_equals(m0, m1)); }
-static inline bool operator != (const mat4 &m0, const mat4 &m1) { return (!mat4_equals(m0, m1)); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
 
 /* ---------------------------------------------------------------------------------------------------- */
 
