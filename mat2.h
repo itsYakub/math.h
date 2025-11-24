@@ -43,14 +43,16 @@ union u_mat2 {
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat2 mat2_zero(void) {
-    mat2 mat = { .m00 = 0.0, .m01 = 0.0,
-                 .m10 = 0.0, .m11 = 0.0  };
+    mat2 mat = {{ 0.0, 0.0,
+                  0.0, 0.0  }};
+
     return (mat);
 }
 
 static inline mat2 mat2_identity(void) {
-    mat2 mat = { .m00 = 1.0, .m01 = 0.0,
-                 .m10 = 0.0, .m11 = 1.0  };
+    mat2 mat = {{ 1.0, 0.0,
+                  0.0, 1.0  }};
+
     return (mat);
 }
 
@@ -60,6 +62,7 @@ static inline mat2 mat2_copy(const mat2 m0) {
     for (size_t i = 0; i < sizeof(mat2); i++) {
         ((unsigned char *) &mat.m00)[i] = ((unsigned char *) &m0.m00)[i];
     }
+
     return (mat);
 }
 
@@ -146,6 +149,10 @@ static inline bool operator != (const mat2 &m0, const mat2 &m1) { return (!mat2_
 
 #  endif /* MATH_DISABLE_CPP_OPERATORS */
 # endif /* __cplusplus */
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static inline float mat2_det(const mat2 m0) { return (m0.m00 * m0.m11 - m0.m10 * m0.m01); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 

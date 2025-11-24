@@ -19,6 +19,7 @@
 # endif /* __cplusplus */
 # include "./common.h"
 # include "./vec4.h"
+# include "mat3.h"
 #
 # if defined (__cplusplus)
 
@@ -45,18 +46,20 @@ union u_mat4 {
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat4 mat4_zero(void) {
-    mat4 mat = { .m00 = 0.0, .m01 = 0.0, .m02 = 0.0, .m03 = 0.0,
-                 .m10 = 0.0, .m11 = 0.0, .m12 = 0.0, .m13 = 0.0,
-                 .m20 = 0.0, .m21 = 0.0, .m22 = 0.0, .m23 = 0.0,
-                 .m30 = 0.0, .m31 = 0.0, .m32 = 0.0, .m33 = 0.0  };
+    mat4 mat = {{ 0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0,
+                  0.0, 0.0, 0.0, 0.0  }};
+
     return (mat);
 }
 
 static inline mat4 mat4_identity(void) {
-    mat4 mat = { .m00 = 1.0, .m01 = 0.0, .m02 = 0.0, .m03 = 0.0,
-                 .m10 = 0.0, .m11 = 1.0, .m12 = 0.0, .m13 = 0.0,
-                 .m20 = 0.0, .m21 = 0.0, .m22 = 1.0, .m23 = 0.0,
-                 .m30 = 0.0, .m31 = 0.0, .m32 = 0.0, .m33 = 1.0  };
+    mat4 mat = {{ 1.0, 0.0, 0.0, 0.0,
+                  0.0, 1.0, 0.0, 0.0,
+                  0.0, 0.0, 1.0, 0.0,
+                  0.0, 0.0, 0.0, 1.0  }};
+
     return (mat);
 }
 
@@ -66,6 +69,7 @@ static inline mat4 mat4_copy(const mat4 m0) {
     for (size_t i = 0; i < sizeof(mat4); i++) {
         ((unsigned char *) &mat.m00)[i] = ((unsigned char *) &m0.m00)[i];
     }
+
     return (mat);
 }
 
@@ -205,6 +209,30 @@ static inline mat4 mat4_persp(const float fieldOfView, const float aspect, const
     float top   = near * tan(fieldOfView * 0.5);
     float right = top * aspect;
     return (mat4_frust(-right, right, top, -top, near, far));
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static inline float mat4_det(const mat4 m0) {
+    float result = 0.0;
+
+    result += m0.m00 * mat3_det((mat3) {{ m0.m11, m0.m12, m0.m13,
+                                          m0.m21, m0.m22, m0.m23,
+                                          m0.m31, m0.m32, m0.m33  }});
+
+    result -= m0.m01 * mat3_det((mat3) {{ m0.m10, m0.m12, m0.m13,
+                                          m0.m20, m0.m22, m0.m23,
+                                          m0.m30, m0.m32, m0.m33  }});
+
+    result += m0.m02 * mat3_det((mat3) {{ m0.m10, m0.m11, m0.m13,
+                                          m0.m20, m0.m21, m0.m23,
+                                          m0.m30, m0.m31, m0.m33  }});
+
+    result -= m0.m03 * mat3_det((mat3) {{ m0.m10, m0.m11, m0.m12,
+                                          m0.m20, m0.m21, m0.m22,
+                                          m0.m30, m0.m31, m0.m32  }});
+
+    return (result);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

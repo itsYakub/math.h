@@ -44,16 +44,18 @@ union u_mat3 {
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat3 mat3_zero(void) {
-    mat3 mat = { .m00 = 0.0, .m01 = 0.0, .m02 = 0.0,
-                 .m10 = 0.0, .m11 = 0.0, .m12 = 0.0,
-                 .m20 = 0.0, .m21 = 0.0, .m22 = 0.0  };
+    mat3 mat = {{ 0.0,  0.0,  0.0,
+                  0.0,  0.0,  0.0,
+                  0.0,  0.0,  0.0  }};
+
     return (mat);
 }
 
 static inline mat3 mat3_identity(void) {
-    mat3 mat = { .m00 = 1.0, .m01 = 0.0, .m02 = 0.0,
-                 .m10 = 0.0, .m11 = 1.0, .m12 = 0.0,
-                 .m20 = 0.0, .m21 = 0.0, .m22 = 1.0  };
+    mat3 mat = {{ 1.0, 0.0, 0.0,
+                  0.0, 1.0, 0.0,
+                  0.0, 0.0, 1.0  }};
+
     return (mat);
 }
 
@@ -63,6 +65,7 @@ static inline mat3 mat3_copy(const mat3 m0) {
     for (size_t i = 0; i < sizeof(mat3); i++) {
         ((unsigned char *) &mat.m00)[i] = ((unsigned char *) &m0.m00)[i];
     }
+
     return (mat);
 }
 
@@ -159,6 +162,23 @@ static inline bool operator != (const mat3 &m0, const mat3 &m1) { return (!mat3_
 
 #  endif /* MATH_DISABLE_CPP_OPERATORS */
 # endif /* __cplusplus */
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static inline float mat3_det(const mat3 m0) {
+    float result = 0.0;
+
+    result += m0.m00 * m0.m11 * m0.m22;
+    result += m0.m01 * m0.m12 * m0.m20;
+    result += m0.m02 * m0.m10 * m0.m21;
+    
+    result -= m0.m20 * m0.m11 * m0.m02;
+    result -= m0.m21 * m0.m12 * m0.m00;
+    result -= m0.m22 * m0.m10 * m0.m01;
+    
+    return (result);
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline const float *mat3_ptr(const mat3 *m0) { return (&m0->m00); }
