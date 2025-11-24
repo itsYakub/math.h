@@ -60,12 +60,23 @@ static inline float _round(const float f0) {
     return (_trunc(f0) < 0.5 ? _floor(f0) : _ceil(f0));
 }
 
+static inline size_t _fact(size_t v0) {
+    if ((long long) v0 < 0) { return (0); }
+    else if (!v0) { return (1); }
+
+    size_t value = 1.0;
+    while (v0) { value *= v0, v0--; }
+
+    return (value);
+}
+
 # define abs(x)     _abs(x)
 # define trunc(x)   _trunc(x)
 # define mod(x)     _mod(x)
 # define ceil(x)    _ceil(x)
 # define floor(x)   _floor(x)
 # define round(x)   _round(x)
+# define fact(x)    _fact(x)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -85,12 +96,10 @@ static inline float _max(const float f0, const float f1) {
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline float _pow(const float f0, const size_t s0) {
-    float value;
-
     if (s0 == 0)      { return (1.0); }
     else if (s0 == 1) { return (f0);  }
 
-    value = f0;
+    float value = f0;
     for (size_t i = 0; i < s0 - 1; i++) {
         value *= f0;
     }
@@ -99,14 +108,12 @@ static inline float _pow(const float f0, const size_t s0) {
 }
 
 static inline float _sqrt(const float f0) {
-    float low,
-          high,
-          middle;
-
-    low = min(1.0, f0);
-    high = max(1.0, f0);
+    float low = min(1.0, f0);
+    float high = max(1.0, f0);
     while (100.0 * low * low < f0)   { low *= 10; }
     while (0.01 * high * high > f0)  { high *= 0.1; }
+
+    float middle = 0.0;
     for (size_t i = 0; i < 100; i++) {
         middle = (low + high) / 2.0;
 
@@ -127,17 +134,13 @@ static inline float degToRad(const float f0) { return (f0 * (PI / 180.0)); }
 static inline float radToDeg(const float f0) { return (f0 * (180.0 / PI)); }
 
 static inline float _sin(float f0) {
-    float value,
-          sign;
-
-    value = 0.0;
-    sign = 1.0;
+    float sign = 1.0;
     while (f0 < -PI / 2.0)    { f0 += PI, sign *= -1.0; }
     while (f0 > PI / 2.0)     { f0 -= PI, sign *= -1.0; }
-    for (size_t n = n ;; n++) {
-        float t;
-
-        t = (pow(-1.0, n) / trunc(2.0 * n + 1.0)) * pow(f0, 2.0 * n + 1.0);
+    
+    float value = 0.0;
+    for (size_t n = 0 ;; n++) {
+        float t = (pow(-1.0, n) / fact(2.0 * n + 1.0)) * pow(f0, 2.0 * n + 1.0);
         if (abs(t) < EPSILON) { break; }
 
         value += t;
