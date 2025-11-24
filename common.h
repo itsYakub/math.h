@@ -36,29 +36,17 @@ extern "C" {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _abs(const float f0) {
-    return (f0 < 0.0 ? -f0 : f0);
-}
+static inline float _abs(const float f0) { return (f0 < 0.0 ? -f0 : f0); }
 
-static inline float _trunc(const float f0) {
-    return (f0 - (long) f0);
-}
+static inline float _trunc(const float f0) { return (f0 - (long) f0); }
 
-static inline float _mod(const float f0, const float f1) {
-    return (f0 - (long) (f0 / f1) * f1);
-}
+static inline float _mod(const float f0, const float f1) { return (f0 - (long) (f0 / f1) * f1); }
 
-static inline float _ceil(const float f0) {
-    return ((long) f0 + 1.0);
-}
+static inline float _ceil(const float f0) { return ((long) f0 + 1.0); }
 
-static inline float _floor(const float f0) {
-    return ((long) f0);
-}
+static inline float _floor(const float f0) { return ((long) f0); }
 
-static inline float _round(const float f0) {
-    return (_trunc(f0) < 0.5 ? _floor(f0) : _ceil(f0));
-}
+static inline float _round(const float f0) { return (_trunc(f0) < 0.5 ? _floor(f0) : _ceil(f0)); }
 
 static inline size_t _fact(size_t v0) {
     if ((long long) v0 < 0) { return (0); }
@@ -149,17 +137,11 @@ static inline float _sin(float f0) {
     return (value * sign);
 }
 
-static inline float _cos(float f0) {
-    return (_sin(degToRad(90) - f0));
-}
+static inline float _cos(float f0) { return (_sin(degToRad(90) - f0)); }
 
-static inline float _tan(float f0) {
-    return (_sin(f0) / _cos(f0));
-}
+static inline float _tan(float f0) { return (_sin(f0) / _cos(f0)); }
 
-static inline float _cot(float f0) {
-    return (1.0 / _tan(f0));
-}
+static inline float _cot(float f0) { return (1.0 / _tan(f0)); }
 
 # define sin(x)     _sin(x)
 # define cos(x)     _cos(x)
@@ -185,13 +167,9 @@ static inline float _asin(float f0) {
     return (value - 2.0 * sign * value);
 }
 
-static inline float _acos(float f0) {
-    return (PI / 2.0 - _asin(f0));
-}
+static inline float _acos(float f0) { return (PI / 2.0 - _asin(f0)); }
 
-static inline float _atan(float f0) {
-    return (_asin(f0 / _sqrt(1.0 + f0 * f0)));
-}
+static inline float _atan(float f0) { return (_asin(f0 / _sqrt(1.0 + f0 * f0))); }
 
 static inline float _atan2(float f0, float f1) {
     if (f1 > 0.0)       { return (_atan(f0 / f1)); }
@@ -206,9 +184,7 @@ static inline float _atan2(float f0, float f1) {
     return (NAN);
 }
 
-static inline float _acot(float f0) {
-    return (PI / 2.0 - _atan(f0));
-}
+static inline float _acot(float f0) { return (PI / 2.0 - _atan(f0)); }
 
 # define asin(x)     _asin(x)
 # define acos(x)     _acos(x)
@@ -224,9 +200,7 @@ static inline float clamp(const float f0, const float min, const float max) {
                   { return (f0); }
 }
 
-static inline float clamp01(const float f0) {
-    return (clamp(f0, 0.0, 1.0));
-}
+static inline float clamp01(const float f0) { return (clamp(f0, 0.0, 1.0)); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
