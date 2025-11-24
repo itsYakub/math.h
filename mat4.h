@@ -226,6 +226,10 @@ static inline bool operator != (const mat4 &m0, const mat4 &m1) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static inline const float *mat4_ptr(const mat4 *m0) { return (&m0->m00); }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static inline const char *mat4_string(const mat4 m0) {
     static char buf[1024];
 
