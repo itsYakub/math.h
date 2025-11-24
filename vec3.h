@@ -27,7 +27,7 @@ extern "C" {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef union u_vec3    vec3;
+typedef union u_vec3 vec3;
 union u_vec3 {
     struct {
         float x;
