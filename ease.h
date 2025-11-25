@@ -53,14 +53,22 @@ static inline float easeOut_elastic(const float t) {
 }
 
 static inline float easeOut_bounce(const float t) {
-    const float n1 = 7.5625;
-    const float d1 = 2.75;
           float t1 = clamp01(t);
+    const float t2 = 7.5625;
+    const float t3 = 2.75;
 
-    if (t1 < 1.0 / d1) { return (n1 * t1 * t1); }
-    else if (t1 < 2.0 / d1) { return (n1 * (t1 -= 1.5 / d1) * t1 + 0.75); }
-    else if (t1 < 2.5 / d1) { return (n1 * (t1 -= 2.25 / d1) * t1 + 0.9375); }
-    else { return (n1 * (t1 -= 2.625 / d1) * t1 + 0.984375); }
+    if (t1 < 1.0 / t3) { return (t2 * t1 * t1); }
+
+    float t4, t5;
+    if (t1 < 2.0 / t3)      { t4 = 1.5, t5 = 0.75; }
+    else if (t1 < 2.5 / t3) { t4 = 2.25, t5 = 0.9375; }
+    else                    { t4 = 2.625, t5 = 0.984375; }
+
+    float result = t2;
+    result *= t1 - t4 / t3, t1 -= t4 / t3;
+    result *= t1;
+    result += t5;
+    return (result);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
