@@ -83,12 +83,12 @@ static inline float _max(const float f0, const float f1) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _pow(const float f0, const size_t s0) {
+static inline float _pow(const float f0, const int s0) {
     if (s0 == 0)      { return (1.0); }
     else if (s0 == 1) { return (f0);  }
 
     float value = f0;
-    for (size_t i = 0; i < s0 - 1; i++) {
+    for (int i = 0; i < s0 - 1; i++) {
         value *= f0;
     }
 

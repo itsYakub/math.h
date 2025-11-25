@@ -37,13 +37,19 @@ static inline float easeOut_back(const float t) {
     const float c1 = 1.70158;
     const float c3 = c1 + 1;
     const float t1 = clamp01(t);
-    return (1.0 + c3 * pow(t1 - 1.0, 3.0) + c1 * pow(t1 - 1.0, 2.0));
+    return (1.0 + c3 * pow(t1 - 1.0, 3) + c1 * pow(t1 - 1.0, 2));
 }
 
 static inline float easeOut_elastic(const float t) {
     const float c4 = (2.0 * PI) / 3.0;
     const float t1 = clamp01(t);
-    return (t == 0.0 ? 0.0 : t == 1.0 ? 1.0 : pow(2.0, -10.0 * t1) * sin((t1 * 10.0 - 0.75) * c4) + 1.0);
+    return (t == 0.0
+               ? 0.0
+               : (t == 1.0
+                     ? 1.0
+                     : pow(2.0, -10 * t1) * sin((t1 * 10.0 - 0.75) * c4) + 1.0
+                )
+            );
 }
 
 static inline float easeOut_bounce(const float t) {
@@ -75,7 +81,13 @@ static inline float easeIn_back(const float t) {
 static inline float easeIn_elastic(const float t) {
     const float c4 = (2.0 * PI) / 3.0;
     const float t1 = clamp01(t);
-    return (t == 0.0 ? 0.0 : t == 1.0 ? 1.0 : pow(2.0, 10.0 * t1 - 10.0) * sin((t1 * 10.0 - 10.75) * c4));
+    return (t == 0.0
+               ? 0.0
+               : (t == 1.0
+                     ? 1.0
+                     : pow(2.0, 10 * t1 - 10) * sin((t1 * 10.0 - 10.75) * c4)
+                )
+            );
 }
 
 static inline float easeIn_bounce(const float t) { return (1.0 - easeOut_bounce(1.0 - clamp01(t))); }
