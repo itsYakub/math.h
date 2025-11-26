@@ -15,6 +15,9 @@
 #  include <cstddef>
 # endif /* __cplusplus */
 #
+# if !defined (E)
+#  define E 2.718281828459
+# endif /* E */
 # if !defined (PI)
 #  define PI 3.14159265358979323846
 # endif /* PI */
@@ -25,7 +28,7 @@
 #  define NAN (0.0 / 0.0)
 # endif /* NAN */
 # if !defined (INFINITY)
-#  define INFINITY 1e10000
+#  define INFINITY 1e100
 # endif /* INFINITY */
 #
 # if defined (__cplusplus)
@@ -83,16 +86,59 @@ static inline float _max(const float f0, const float f1) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _pow(const float f0, const int s0) {
-    if (s0 == 0)      { return (1.0); }
-    else if (s0 == 1) { return (f0);  }
+static inline float _exp(const float f0) {
+    if (f0 == 1.0) { return (E); }
 
-    float value = f0;
-    for (int i = 0; i < s0 - 1; i++) {
-        value *= f0;
+    float result = 1.0;
+    float term   = 1.0;
+    for (size_t n = 1; n < 256; n++) {
+        result += (term *= f0 / n);
     }
 
-    return (value);
+    return (result);
+}
+
+# define exp(x)     _exp(x)
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static inline float _logn(const float f0) {
+    float f1 = f0 - 1.0,
+          f2 = f1;
+
+    do {
+        f1 = f2;
+        f2 = f1 + 2.0 * (f0 - _exp(f1)) / (f0 + _exp(f1));
+    } while (_abs(f1 - f2) > EPSILON);
+    return (f2);
+}
+
+static inline float _log(const float f0, const float f1) { return (_logn(f0) / _logn(f1)); }
+
+
+# define logn(x)    _logn(x)
+# define log(x)     _log(x)
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static inline float _pow(const float f0, const float f1) {
+    if (f1 < 0.0)  { return (1.0 / _pow(f0, abs(f1))); }
+    if (f1 == 0.0) { return (1.0); }
+
+    /* Perform regular iterative operation on the integer exponent...
+     * */
+    if (f1 - (int) f1 == 0.0) {
+        float result = 1.0;
+        for (size_t i = 0; i < (size_t) f1; i++) {
+            result *= f0;
+        }
+
+        return (result);
+    }
+
+    /* Perform exponential and logarithmic operation on floating-point exponent...
+     * */
+    return (_exp(f1 * _logn(f0)));
 }
 
 static inline float _sqrt(const float f0) {
@@ -118,8 +164,13 @@ static inline float _sqrt(const float f0) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float degToRad(const float f0) { return (f0 * (PI / 180.0)); }
-static inline float radToDeg(const float f0) { return (f0 * (180.0 / PI)); }
+static inline float _degToRad(const float f0) { return (f0 * (PI / 180.0)); }
+static inline float _radToDeg(const float f0) { return (f0 * (180.0 / PI)); }
+
+# define degToRad(x)    _degToRad(x)
+# define radToDeg(x)    _radToDeg(x)
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 static inline float _sin(float f0) {
     float sign = 1.0;
@@ -128,7 +179,7 @@ static inline float _sin(float f0) {
     
     float value = 0.0;
     for (size_t n = 0 ;; n++) {
-        float t = (pow(-1.0, n) / fact(2.0 * n + 1.0)) * pow(f0, 2.0 * n + 1.0);
+        float t = (_pow(-1.0, n) / _fact(2.0 * n + 1.0)) * _pow(f0, 2.0 * n + 1.0);
         if (abs(t) < EPSILON) { break; }
 
         value += t;
@@ -137,7 +188,7 @@ static inline float _sin(float f0) {
     return (value * sign);
 }
 
-static inline float _cos(float f0) { return (_sin(degToRad(90) - f0)); }
+static inline float _cos(float f0) { return (_sin(_degToRad(90.0) - f0)); }
 
 static inline float _tan(float f0) { return (_sin(f0) / _cos(f0)); }
 
@@ -194,13 +245,16 @@ static inline float _acot(float f0) { return (PI / 2.0 - _atan(f0)); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float clamp(const float f0, const float min, const float max) {
+static inline float _clamp(const float f0, const float min, const float max) {
     if (f0 < min) { return (min); }
     if (f0 > max) { return (max); }
                   { return (f0); }
 }
 
-static inline float clamp01(const float f0) { return (clamp(f0, 0.0, 1.0)); }
+static inline float clamp01(const float f0) { return (_clamp(f0, 0.0, 1.0)); }
+
+# define clamp(x, y, z) _clamp(x, y, z)
+# define clamp01(x)     _clamp(x)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
