@@ -316,6 +316,83 @@ static inline float _clamp01(const float f0) { return (_clamp(f0, 0.0, 1.0)); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+# if !defined (isspace)
+#  define isspace(c) ((c >= '\t' && c <= '\r') || c == ' ')
+# endif /* isspace */
+# if !defined (isdigit)
+#  define isdigit(c) (c >= '0' && c <= '9')
+# endif /* isdigit */
+
+static inline signed int _atoi(const char *str) {
+    while (isspace(*str)) { str++; }
+
+    int sign = 1;
+    if (*str == '+' || *str == '-') {
+        if (*str == '-') {
+            sign *= -1;
+        }
+        str++;
+    }
+
+    int value = 0;
+    while (isdigit(*str)) {
+        value *= 10;
+        value += (int) (*str - '0');
+        str++;
+    }
+
+    return (value * sign);
+}
+
+static inline signed int _atou(const char *str) { return ((unsigned int) _atoi(str)); }
+
+static inline double _atod(const char *str) {
+    while (isspace(*str)) { str++; }
+
+    int sign = 1;
+    if (*str == '+' || *str == '-') {
+        if (*str == '-') {
+            sign *= -1;
+        }
+        str++;
+    }
+
+    float value = 0.0;
+    while (isdigit(*str)) {
+        value *= 10;
+        value += (int) (*str - '0');
+        str++;
+    }
+
+    if (*str++ != '.') { return (value * sign); }
+    
+    float fraction = 0.0;
+    for (size_t n = 1; isdigit(*str); n++, str++) {
+        fraction += (float) (*str - '0') / _pow(10, n);
+    }
+
+    return ((value + fraction) * sign);
+}
+
+static inline float _atof(const char *str) { return ((float) _atod(str)); }
+
+# if !defined (atoi)
+#  define atoi(s)   _atoi(s)
+# endif /* atoi */
+# if !defined (atou)
+#  define atou(s)   _atou(s)
+# endif /* atou */
+# if !defined (atod)
+#  define atod(s)   _atod(s)
+# endif /* atod */
+# if !defined (atof)
+#  define atof(s)   _atof(s)
+# endif /* atof */
+# undef isspace
+# undef isdigit
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 # if defined (__cplusplus)
 
 }
