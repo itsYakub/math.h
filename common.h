@@ -104,13 +104,15 @@ static inline float _max(const float f0, const float f1) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+#include <stdio.h>
+
 static inline float _exp(const float f0) {
     if (f0 == 1.0) { return (E); }
 
     float result = 1.0;
     float term   = 1.0;
     for (size_t n = 1; n < 256; n++) {
-        result += (term *= f0 / n);
+        term *= f0 / n, result += term;
     }
 
     return (result);
@@ -147,7 +149,14 @@ static inline float _log(const float f0, const float f1) { return (_logn(f0) / _
 
 static inline float _pow(const float f0, const float f1) {
     if (f1 < 0.0)  { return (1.0 / _pow(f0, _abs(f1))); }
-    if (f1 == 0.0) { return (1.0); }
+    if (f1 - (int) f1 == 0.0) {
+        float value = 1.0;
+
+        for (size_t n = 0; n < f1; n++) {
+            value *= f0;
+        }
+        return (value);
+    }
 
     return (_exp(f1 * _logn(f0)));
 }
@@ -179,6 +188,14 @@ static inline float _sqrt(const float f0) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static inline float _dot(const float f0, const float f1) { return (f0 * f1); }
+
+# if !defined (dot)
+#  define dot(x, y) _dot(x, y)
+# endif /* dot */
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static inline float _degToRad(const float f0) { return (f0 * (PI / 180.0)); }
 static inline float _radToDeg(const float f0) { return (f0 * (180.0 / PI)); }
 
@@ -199,7 +216,7 @@ static inline float _sin(float f0) {
     float value = 0.0;
     for (size_t n = 0 ;; n++) {
         float t = (_pow(-1.0, n) / _fact(2.0 * n + 1.0)) * _pow(f0, 2.0 * n + 1.0);
-        if (abs(t) < EPSILON) { break; }
+        if (_abs(t) < EPSILON) { break; }
 
         value += t;
     }
