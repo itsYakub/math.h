@@ -104,8 +104,6 @@ static inline float _max(const float f0, const float f1) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-#include <stdio.h>
-
 static inline float _exp(const float f0) {
     if (f0 == 1.0) { return (E); }
 
