@@ -288,13 +288,13 @@ static inline float _clamp(const float f0, const float min, const float max) {
                   { return (f0); }
 }
 
-static inline float clamp01(const float f0) { return (_clamp(f0, 0.0, 1.0)); }
+static inline float _clamp01(const float f0) { return (_clamp(f0, 0.0, 1.0)); }
 
 # if !defined (clamp)
 #  define clamp(x, y, z) _clamp(x, y, z)
 # endif /* clamp */
 # if !defined (clamp01)
-#  define clamp01(x)     _clamp(x)
+#  define clamp01(x)     _clamp01(x)
 # endif /* clamp01 */
 
 /* ---------------------------------------------------------------------------------------------------- */
