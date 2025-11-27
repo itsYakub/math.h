@@ -16,5 +16,7 @@
 # include "./mat2.h"
 # include "./mat3.h"
 # include "./mat4.h"
+# include "./ease.h"
+# include "./lerp.h"
 #
 #endif /* _math_h_ */
