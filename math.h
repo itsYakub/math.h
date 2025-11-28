@@ -20,9 +20,3 @@
 # include "./lerp.h"
 #
 #endif /* _math_h_ */
-
-/* TODO:
- *  Fix the problem with C++ operators that happens with a name-mangling fix
- *  (common problem with C++ where 'extern "C" { ... }' converts all the c++
- *   definitions to c-style definitions (and C++ doesn't like that)).
- * */
