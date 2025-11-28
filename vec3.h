@@ -126,6 +126,24 @@ static inline float vec3_dot(const vec3 v0, const vec3 v1) {
     return (v0.x * v1.x + v0.y * v1.y + v0.z * v1.z);
 }
 
+static inline vec3 vec3_cross(const vec3 v0, const vec3 v1) {
+    vec3 vec;
+
+    vec.x = v0.y * v1.z - v0.z * v1.y;
+    vec.y = v0.x * v1.z - v0.z * v1.x;
+    vec.z = v0.x * v1.y - v0.x * v1.y;
+    return (vec);
+}
+
+static inline vec3 vec3_normalize(const vec3 v0) {
+    vec3 value = vec3_zero();
+    float len = vec3_len(v0);
+    if (len > 0.0) {
+        value = vec3_mulf(v0, 1.0 / len);
+    }
+    return (value);
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline const float *vec3_ptr(const vec3 *v0) { return (&v0->x); }

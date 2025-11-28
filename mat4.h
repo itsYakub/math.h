@@ -18,6 +18,7 @@
 #  include <cstring>
 # endif /* __cplusplus */
 # include "./common.h"
+# include "./vec3.h"
 # include "./vec4.h"
 # include "./mat3.h"
 #
@@ -146,33 +147,67 @@ static inline bool mat4_equals(const mat4 m0, const mat4 m1) {
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat4 mat4_ortho(const float left, const float right, const float top, const float down, const float near, const float far) {
+    float left_right = ( 1.0 / (right - left));
+    float top_bottom = ( 1.0 / (top   - down));
+    float near_far   = (-1.0 / (far   - near));
+    
     mat4 mat = mat4_zero();
-    mat.m00  = 2.0 / (right - left);
-    mat.m11  = 2.0 / (top   - down);
-    mat.m22  = 2.0 / (far   - near);
-    mat.m30  = -(left + right) / (right - left);
-    mat.m31  = -(top + down) / (top - down);
-    mat.m32  = -(far + near) / (far - near);
+    mat.m00  = 2.0 * left_right;
+    mat.m11  = 2.0 * top_bottom;
+    mat.m22  = 2.0 * near_far;
+    mat.m30  = -(left + right) * left_right;
+    mat.m31  = -(top + down)   * top_bottom;
+    mat.m32  = -(far + near)   * near_far;
     mat.m33  = 1.0;
     return (mat);
 }
 
 static inline mat4 mat4_frust(const float left, const float right, const float top, const float down, const float near, const float far) {
+    float left_right = ( 1.0 / (right - left));
+    float top_bottom = ( 1.0 / (top   - down));
+    float near_far   = (-1.0 / (far   - near));
+    float near_value =   2.0 * near;
+
     mat4 mat = mat4_zero();
-    mat.m00  = (near * 2.0) / (right - left);
-    mat.m11  = (near * 2.0) / (top   - down);
-    mat.m20  = (left + right) / (right - left);
-    mat.m21  = (top + down) / (top - down);
-    mat.m22  = -(far + near) / (far - near);
+    mat.m00  = (near * 2.0)   * left_right;
+    mat.m11  = (near * 2.0)   * top_bottom;
+    mat.m20  = (left + right) * left_right;
+    mat.m21  = (top + down)   * top_bottom;
+    mat.m22  = (far + near)   * near_far;
     mat.m23  = -1.0;
-    mat.m32  = -(far * near * 2.0) / (far - near);
+    mat.m32  = far * near_value * near_far;
     return (mat);
 }
 
 static inline mat4 mat4_persp(const float fieldOfView, const float aspect, const float near, const float far) {
-    float top   = near * tan(fieldOfView * 0.5);
-    float right = top * aspect;
-    return (mat4_frust(-right, right, top, -top, near, far));
+    float f0 = 1.0 * tan(fieldOfView * 0.5);
+    float f1 = 1.0 / (far - near);
+    
+    mat4 mat = mat4_zero();
+    mat.m00 = f0 / aspect;
+    mat.m11 = f0;
+    mat.m22 = (far + near) * f1;
+    mat.m23 = -1.0;
+    mat.m32 = 2.0 * near * far * f1;
+    return (mat);
+}
+
+static inline mat4 mat4_lookat(const vec3 eye, const vec3 center, const vec3 up) {
+    vec3 f, u, s;
+    f = vec3_sub(center, eye);
+    f = vec3_normalize(f);
+
+    s = vec3_cross(up, f);
+    s = vec3_normalize(s);
+
+    u = vec3_cross(f, s);
+
+    mat4 mat = mat4_zero();
+    mat.m0 = vec4_init(s.x, u.x, f.x, 0.0);
+    mat.m1 = vec4_init(s.y, u.y, f.y, 0.0);
+    mat.m2 = vec4_init(s.z, u.z, f.z, 0.0);
+    mat.m3 = vec4_init(-vec3_dot(s, eye), -vec3_dot(u, eye), -vec3_dot(f, eye), 1.0);
+    return (mat);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
