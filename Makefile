@@ -12,7 +12,9 @@ MODULES		= $(MK_ROOT)math.h 		\
 			  $(MK_ROOT)vec4.h		\
 			  $(MK_ROOT)mat2.h		\
 			  $(MK_ROOT)mat3.h		\
-			  $(MK_ROOT)mat4.h
+			  $(MK_ROOT)mat4.h		\
+			  $(MK_ROOT)ease.h		\
+			  $(MK_ROOT)lerp.h
 
 # ========
 

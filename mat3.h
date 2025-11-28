@@ -80,15 +80,6 @@ static inline mat3 mat3_add(const mat3 m0, const mat3 m1) {
     return (mat);
 }
 
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline mat3 operator + (const mat3 &v0, const mat3 &v1)   { return (mat3_add(v0, v1)); }
-const static inline mat3& operator += (mat3 &v0, const mat3 &v1) { v0 = mat3_add(v0, v1); return (v0); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat3 mat3_sub(const mat3 m0, const mat3 m1) {
@@ -99,15 +90,6 @@ static inline mat3 mat3_sub(const mat3 m0, const mat3 m1) {
     mat.m2 = vec3_sub(m0.m2, m1.m2);
     return (mat);
 }
-
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline mat3 operator - (const mat3 &v0, const mat3 &v1)   { return (mat3_sub(v0, v1)); }
-const static inline mat3& operator -= (mat3 &v0, const mat3 &v1) { v0 = mat3_sub(v0, v1); return (v0); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -137,15 +119,6 @@ static inline mat3 mat3_mulf(const mat3 m0, const float f) {
     return (mat);
 }
 
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline mat3 operator * (const mat3 &v0, const mat3 &v1)   { return (mat3_mul(v0, v1)); }
-const static inline mat3& operator *= (mat3 &v0, const mat3 &v1) { v0 = mat3_mul(v0, v1); return (v0); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline bool mat3_equals(const mat3 m0, const mat3 m1) {
@@ -153,15 +126,6 @@ static inline bool mat3_equals(const mat3 m0, const mat3 m1) {
             vec3_equals(m0.m1, m1.m1) &&
             vec3_equals(m0.m2, m1.m2));
 }
-
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline bool operator == (const mat3 &m0, const mat3 &m1) { return (mat3_equals(m0, m1)); }
-static inline bool operator != (const mat3 &m0, const mat3 &m1) { return (!mat3_equals(m0, m1)); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -202,4 +166,27 @@ static inline const char *mat3_string(const mat3 m0) {
 }
 
 # endif /* __cplusplus */
+#
+# if defined (__cplusplus)
+#  if !defined (MATH_DISABLE_CPP_OPERATORS)
+
+static inline mat3 operator + (const mat3 &v0, const mat3 &v1) { return (mat3_add(v0, v1)); }
+
+const static inline mat3& operator += (mat3 &v0, const mat3 &v1) { return ((v0 = mat3_add(v0, v1))); }
+
+static inline mat3 operator - (const mat3 &v0, const mat3 &v1)   { return (mat3_sub(v0, v1)); }
+
+const static inline mat3& operator -= (mat3 &v0, const mat3 &v1) { return ((v0 = mat3_sub(v0, v1))); }
+
+static inline mat3 operator * (const mat3 &v0, const mat3 &v1)   { return (mat3_mul(v0, v1)); }
+
+const static inline mat3& operator *= (mat3 &v0, const mat3 &v1) { return ((v0 = mat3_mul(v0, v1))); }
+
+static inline bool operator == (const mat3 &v0, const mat3 &v1) { return (mat3_equals(v0, v1)); }
+
+static inline bool operator != (const mat3 &v0, const mat3 &v1) { return (!mat3_equals(v0, v1)); }
+
+#  endif /* MATH_DISABLE_CPP_OPERATORS */
+# endif /* __cplusplus */
+#
 #endif /* _mat3_h_ */

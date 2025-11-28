@@ -70,31 +70,11 @@ static inline vec3 vec3_add(const vec3 v0, const vec3 v1) { return (vec3_init(v0
 
 static inline vec3 vec3_addf(const vec3 v0, const float f) { return (vec3_init(v0.x + f, v0.y + f, v0.z + f)); }
 
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline vec3 operator + (const vec3 &v0, const vec3 &v1) { return (vec3_add(v0, v1)); }
-
-const static inline vec3& operator += (vec3 &v0, const vec3 &v1) { return ((v0 = vec3_add(v0, v1))); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline vec3 vec3_sub(const vec3 v0, const vec3 v1) { return (vec3_init(v0.x - v1.x, v0.y - v1.y, v0.z - v1.z)); }
 
 static inline vec3 vec3_subf(const vec3 v0, const float f) { return (vec3_init(v0.x - f, v0.y - f, v0.z - f)); }
-
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline vec3 operator - (const vec3 &v0, const vec3 &v1) { return (vec3_sub(v0, v1)); }
-
-const static inline vec3& operator -= (vec3 &v0, const vec3 &v1) { return ((v0 = vec3_sub(v0, v1))); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -102,45 +82,15 @@ static inline vec3 vec3_mul(const vec3 v0, const vec3 v1) { return (vec3_init(v0
 
 static inline vec3 vec3_mulf(const vec3 v0, const float f) { return (vec3_init(v0.x * f, v0.y * f, v0.z * f)); }
 
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline vec3 operator * (const vec3 &v0, const vec3 &v1) { return (vec3_mul(v0, v1)); }
-
-const static inline vec3& operator *= (vec3 &v0, const vec3 &v1) { return ((v0 = vec3_mul(v0, v1))); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline vec3 vec3_div(const vec3 v0, const vec3 v1) { return (vec3_init(v0.x / v1.x, v0.y / v1.y, v0.z / v1.z)); }
 
 static inline vec3 vec3_divf(const vec3 v0, const float f) { return (vec3_init(v0.x / f, v0.y / f, v0.z / f)); }
 
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline vec3 operator / (const vec3 &v0, const vec3 &v1) { return (vec3_div(v0, v1)); }
-
-const static inline vec3& operator /= (vec3 &v0, const vec3 &v1) { return ((v0 = vec3_div(v0, v1))); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline bool vec3_equals(const vec3 v0, const vec3 v1) { return (v0.x == v1.x && v0.y == v1.y && v0.z == v1.z); }
-
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline bool operator == (const vec3 &v0, const vec3 &v1) { return (vec3_equals(v0, v1)); }
-
-static inline bool operator != (const vec3 &v0, const vec3 &v1) { return (!vec3_equals(v0, v1)); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -197,4 +147,31 @@ static inline const char *vec3_string(const vec3 v0) {
 }
 
 # endif /* __cplusplus */
+#
+# if defined (__cplusplus)
+#  if !defined (MATH_DISABLE_CPP_OPERATORS)
+
+static inline vec3 operator + (const vec3 &v0, const vec3 &v1) { return (vec3_add(v0, v1)); }
+
+const static inline vec3& operator += (vec3 &v0, const vec3 &v1) { return ((v0 = vec3_add(v0, v1))); }
+
+static inline vec3 operator - (const vec3 &v0, const vec3 &v1)   { return (vec3_sub(v0, v1)); }
+
+const static inline vec3& operator -= (vec3 &v0, const vec3 &v1) { return ((v0 = vec3_sub(v0, v1))); }
+
+static inline vec3 operator * (const vec3 &v0, const vec3 &v1)   { return (vec3_mul(v0, v1)); }
+
+const static inline vec3& operator *= (vec3 &v0, const vec3 &v1) { return ((v0 = vec3_mul(v0, v1))); }
+
+static inline vec3 operator / (const vec3 &v0, const vec3 &v1)   { return (vec3_div(v0, v1)); }
+
+const static inline vec3& operator /= (vec3 &v0, const vec3 &v1) { return ((v0 = vec3_div(v0, v1))); }
+
+static inline bool operator == (const vec3 &v0, const vec3 &v1) { return (vec3_equals(v0, v1)); }
+
+static inline bool operator != (const vec3 &v0, const vec3 &v1) { return (!vec3_equals(v0, v1)); }
+
+#  endif /* MATH_DISABLE_CPP_OPERATORS */
+# endif /* __cplusplus */
+#
 #endif /* _vec3_h_ */

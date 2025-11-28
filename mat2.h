@@ -76,15 +76,6 @@ static inline mat2 mat2_add(const mat2 m0, const mat2 m1) {
     return (mat);
 }
 
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline mat2 operator + (const mat2 &v0, const mat2 &v1)   { return (mat2_add(v0, v1)); }
-const static inline mat2& operator += (mat2 &v0, const mat2 &v1) { v0 = mat2_add(v0, v1); return (v0); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat2 mat2_sub(const mat2 m0, const mat2 m1) {
@@ -94,15 +85,6 @@ static inline mat2 mat2_sub(const mat2 m0, const mat2 m1) {
     mat.m1 = vec2_sub(m0.m1, m1.m1);
     return (mat);
 }
-
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline mat2 operator - (const mat2 &v0, const mat2 &v1)   { return (mat2_sub(v0, v1)); }
-const static inline mat2& operator -= (mat2 &v0, const mat2 &v1) { v0 = mat2_sub(v0, v1); return (v0); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -125,30 +107,12 @@ static inline mat2 mat2_mulf(const mat2 m0, const float f) {
     return (mat);
 }
 
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline mat2 operator * (const mat2 &v0, const mat2 &v1)   { return (mat2_mul(v0, v1)); }
-const static inline mat2& operator *= (mat2 &v0, const mat2 &v1) { v0 = mat2_mul(v0, v1); return (v0); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline bool mat2_equals(const mat2 m0, const mat2 m1) {
     return (vec2_equals(m0.m0, m1.m0) &&
             vec2_equals(m0.m1, m1.m1));
 }
-
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline bool operator == (const mat2 &m0, const mat2 &m1) { return (mat2_equals(m0, m1)); }
-static inline bool operator != (const mat2 &m0, const mat2 &m1) { return (!mat2_equals(m0, m1)); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -176,4 +140,27 @@ static inline const char *mat2_string(const mat2 m0) {
 }
 
 # endif /* __cplusplus */
+#
+# if defined (__cplusplus)
+#  if !defined (MATH_DISABLE_CPP_OPERATORS)
+
+static inline mat2 operator + (const mat2 &v0, const mat2 &v1) { return (mat2_add(v0, v1)); }
+
+const static inline mat2& operator += (mat2 &v0, const mat2 &v1) { return ((v0 = mat2_add(v0, v1))); }
+
+static inline mat2 operator - (const mat2 &v0, const mat2 &v1)   { return (mat2_sub(v0, v1)); }
+
+const static inline mat2& operator -= (mat2 &v0, const mat2 &v1) { return ((v0 = mat2_sub(v0, v1))); }
+
+static inline mat2 operator * (const mat2 &v0, const mat2 &v1)   { return (mat2_mul(v0, v1)); }
+
+const static inline mat2& operator *= (mat2 &v0, const mat2 &v1) { return ((v0 = mat2_mul(v0, v1))); }
+
+static inline bool operator == (const mat2 &v0, const mat2 &v1) { return (mat2_equals(v0, v1)); }
+
+static inline bool operator != (const mat2 &v0, const mat2 &v1) { return (!mat2_equals(v0, v1)); }
+
+#  endif /* MATH_DISABLE_CPP_OPERATORS */
+# endif /* __cplusplus */
+#
 #endif /* _mat2_h_ */
