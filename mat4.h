@@ -18,9 +18,8 @@
 #  include <cstring>
 # endif /* __cplusplus */
 # include "./common.h"
-# include "./vec3.h"
 # include "./vec4.h"
-# include "./mat3.h"
+# include "mat3.h"
 #
 # if defined (__cplusplus)
 
@@ -86,6 +85,15 @@ static inline mat4 mat4_add(const mat4 m0, const mat4 m1) {
     return (mat);
 }
 
+# if defined (__cplusplus)
+#  if !defined (MATH_DISABLE_CPP_OPERATORS)
+
+static inline mat4 operator + (const mat4 &v0, const mat4 &v1)   { return (mat4_add(v0, v1)); }
+const static inline mat4& operator += (mat4 &v0, const mat4 &v1) { v0 = mat4_add(v0, v1); return (v0); }
+
+#  endif /* MATH_DISABLE_CPP_OPERATORS */
+# endif /* __cplusplus */
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat4 mat4_sub(const mat4 m0, const mat4 m1) {
@@ -97,6 +105,15 @@ static inline mat4 mat4_sub(const mat4 m0, const mat4 m1) {
     mat.m3 = vec4_sub(m0.m3, m1.m3);
     return (mat);
 }
+
+# if defined (__cplusplus)
+#  if !defined (MATH_DISABLE_CPP_OPERATORS)
+
+static inline mat4 operator - (const mat4 &v0, const mat4 &v1)   { return (mat4_sub(v0, v1)); }
+const static inline mat4& operator -= (mat4 &v0, const mat4 &v1) { v0 = mat4_sub(v0, v1); return (v0); }
+
+#  endif /* MATH_DISABLE_CPP_OPERATORS */
+# endif /* __cplusplus */
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -135,6 +152,15 @@ static inline mat4 mat4_mulf(const mat4 m0, const float f) {
     return (mat);
 }
 
+# if defined (__cplusplus)
+#  if !defined (MATH_DISABLE_CPP_OPERATORS)
+
+static inline mat4 operator * (const mat4 &v0, const mat4 &v1)   { return (mat4_mul(v0, v1)); }
+const static inline mat4& operator *= (mat4 &v0, const mat4 &v1) { v0 = mat4_mul(v0, v1); return (v0); }
+
+#  endif /* MATH_DISABLE_CPP_OPERATORS */
+# endif /* __cplusplus */
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline bool mat4_equals(const mat4 m0, const mat4 m1) {
@@ -144,70 +170,157 @@ static inline bool mat4_equals(const mat4 m0, const mat4 m1) {
             vec4_equals(m0.m3, m1.m3));
 }
 
+# if defined (__cplusplus)
+#  if !defined (MATH_DISABLE_CPP_OPERATORS)
+
+static inline bool operator == (const mat4 &m0, const mat4 &m1) { return (mat4_equals(m0, m1)); }
+static inline bool operator != (const mat4 &m0, const mat4 &m1) { return (!mat4_equals(m0, m1)); }
+
+#  endif /* MATH_DISABLE_CPP_OPERATORS */
+# endif /* __cplusplus */
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat4 mat4_ortho(const float left, const float right, const float top, const float down, const float near, const float far) {
-    float left_right = ( 1.0 / (right - left));
-    float top_bottom = ( 1.0 / (top   - down));
-    float near_far   = (-1.0 / (far   - near));
-    
     mat4 mat = mat4_zero();
-    mat.m00  = 2.0 * left_right;
-    mat.m11  = 2.0 * top_bottom;
-    mat.m22  = 2.0 * near_far;
-    mat.m30  = -(left + right) * left_right;
-    mat.m31  = -(top + down)   * top_bottom;
-    mat.m32  = -(far + near)   * near_far;
+    mat.m00  = 2.0 / (right - left);
+    mat.m11  = 2.0 / (top   - down);
+    mat.m22  = 2.0 / (far   - near);
+    mat.m30  = -(left + right) / (right - left);
+    mat.m31  = -(top + down) / (top - down);
+    mat.m32  = -(far + near) / (far - near);
     mat.m33  = 1.0;
     return (mat);
 }
 
 static inline mat4 mat4_frust(const float left, const float right, const float top, const float down, const float near, const float far) {
-    float left_right = ( 1.0 / (right - left));
-    float top_bottom = ( 1.0 / (top   - down));
-    float near_far   = (-1.0 / (far   - near));
-    float near_value =   2.0 * near;
-
     mat4 mat = mat4_zero();
-    mat.m00  = (near * 2.0)   * left_right;
-    mat.m11  = (near * 2.0)   * top_bottom;
-    mat.m20  = (left + right) * left_right;
-    mat.m21  = (top + down)   * top_bottom;
-    mat.m22  = (far + near)   * near_far;
+    mat.m00  = (near * 2.0) / (right - left);
+    mat.m11  = (near * 2.0) / (top   - down);
+    mat.m20  = (left + right) / (right - left);
+    mat.m21  = (top + down) / (top - down);
+    mat.m22  = -(far + near) / (far - near);
     mat.m23  = -1.0;
-    mat.m32  = far * near_value * near_far;
+    mat.m32  = -(far * near * 2.0) / (far - near);
     return (mat);
 }
 
 static inline mat4 mat4_persp(const float fieldOfView, const float aspect, const float near, const float far) {
-    float f0 = 1.0 * tan(fieldOfView * 0.5);
-    float f1 = 1.0 / (far - near);
-    
-    mat4 mat = mat4_zero();
-    mat.m00 = f0 / aspect;
-    mat.m11 = f0;
-    mat.m22 = (far + near) * f1;
-    mat.m23 = -1.0;
-    mat.m32 = 2.0 * near * far * f1;
-    return (mat);
+    float top   = near * tan(fieldOfView * 0.5);
+    float right = top * aspect;
+    return (mat4_frust(-right, right, top, -top, near, far));
 }
 
-static inline mat4 mat4_lookat(const vec3 eye, const vec3 center, const vec3 up) {
-    vec3 f, u, s;
-    f = vec3_sub(center, eye);
-    f = vec3_normalize(f);
+/* ---------------------------------------------------------------------------------------------------- */
 
-    s = vec3_cross(up, f);
-    s = vec3_normalize(s);
+static inline mat4 mat4_translate(const vec3 v0) {
+    return ((mat4) {{ 1.0, 0.0, 0.0, v0.x,
+                      0.0, 1.0, 0.0, v0.y,
+                      0.0, 0.0, 1.0, v0.z,
+                      0.0, 0.0, 0.0, 1.0   }} );
+}
 
-    u = vec3_cross(f, s);
+static inline mat4 mat4_scale(const vec3 v0) {
+    return ((mat4) {{ v0.x, 0.0,  0.0,  0.0,
+                      0.0,  v0.y, 0.0,  0.0,
+                      0.0,  0.0,  v0.z, 0.0,
+                      0.0,  0.0,  0.0,  1.0  }} );
+}
 
-    mat4 mat = mat4_zero();
-    mat.m0 = vec4_init(s.x, u.x, f.x, 0.0);
-    mat.m1 = vec4_init(s.y, u.y, f.y, 0.0);
-    mat.m2 = vec4_init(s.z, u.z, f.z, 0.0);
-    mat.m3 = vec4_init(-vec3_dot(s, eye), -vec3_dot(u, eye), -vec3_dot(f, eye), 1.0);
-    return (mat);
+static inline mat4 mat4_rotate(const vec3 axis, const float angle) {
+    float x = axis.x,
+          y = axis.y,
+          z = axis.z;
+
+    float lensqr = x * x + y * y + z * z;
+    if (lensqr != 1.0 && lensqr != 0.0) {
+        float leninv = 1.0 / sqrt(lensqr);
+        x *= leninv;
+        y *= leninv;
+        z *= leninv;
+    }
+
+    float sinres = sin(angle),
+          cosres = cos(angle);
+    float t = 1.0 - cosres;
+
+    mat4 value = mat4_zero();
+    value.m00 = x * x * t + cosres;
+    value.m01 = x * y * t + z * sinres;
+    value.m02 = x * z * t - y * sinres;
+    value.m03 = 0.0;
+    
+    value.m10 = y * x * t - z * sinres;
+    value.m12 = y * y * t + cosres;
+    value.m12 = y * z * t + x * sinres;
+    value.m13 = 0.0;
+    
+    value.m20 = z * x * t + y * sinres;
+    value.m21 = z * y * t - cosres;
+    value.m22 = z * z * t + x * sinres;
+    value.m23 = 0.0;
+    
+    value.m30 = 0.0;
+    value.m31 = 0.0;
+    value.m32 = 0.0;
+    value.m33 = 1.0;
+    return (value);
+}
+
+static inline mat4 mat4_rotatex(const float angle) {
+    float sinres = sin(angle),
+          cosres = cos(angle);
+
+    mat4 value = mat4_identity();
+    value.m11 = cosres;
+    value.m12 = sinres;
+    value.m21 = -sinres;
+    value.m22 = cosres;
+    return (value);
+}
+
+static inline mat4 mat4_rotatey(const float angle) {
+    float sinres = sin(angle),
+          cosres = cos(angle);
+
+    mat4 value = mat4_identity();
+    value.m00 = cosres;
+    value.m02 = -sinres;
+    value.m20 = sinres;
+    value.m22 = cosres;
+    return (value);
+}
+
+static inline mat4 mat4_rotatez(const float angle) {
+    float sinres = sin(angle),
+          cosres = cos(angle);
+
+    mat4 value = mat4_identity();
+    value.m00 = cosres;
+    value.m01 = sinres;
+    value.m10 = -sinres;
+    value.m11 = cosres;
+    return (value);
+}
+
+static inline mat4 mat4_rotatev(const vec3 angle) {
+    float sinx = sin(-angle.x), cosx = cos(-angle.x),
+          siny = sin(-angle.y), cosy = cos(-angle.y),
+          sinz = sin(-angle.z), cosz = cos(-angle.z);
+
+    mat4 value = mat4_identity();
+    value.m00 = cosz * siny;
+    value.m01 = (cosz * siny * sinx) - (sinz * cosx);
+    value.m02 = (cosz * siny * cosx) - (sinz * sinx);
+    
+    value.m10 = sinz * cosy;
+    value.m11 = (sinz * siny * sinx) - (cosz * cosx);
+    value.m12 = (sinz * siny * cosx) - (cosz * sinx);
+    
+    value.m20 = -siny;
+    value.m21 = cosz * sinx;
+    value.m22 = cosy * cosx;
+    return (value);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -258,27 +371,4 @@ static inline const char *mat4_string(const mat4 m0) {
 }
 
 # endif /* __cplusplus */
-#
-# if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
-
-static inline mat4 operator + (const mat4 &v0, const mat4 &v1) { return (mat4_add(v0, v1)); }
-
-const static inline mat4& operator += (mat4 &v0, const mat4 &v1) { return ((v0 = mat4_add(v0, v1))); }
-
-static inline mat4 operator - (const mat4 &v0, const mat4 &v1)   { return (mat4_sub(v0, v1)); }
-
-const static inline mat4& operator -= (mat4 &v0, const mat4 &v1) { return ((v0 = mat4_sub(v0, v1))); }
-
-static inline mat4 operator * (const mat4 &v0, const mat4 &v1)   { return (mat4_mul(v0, v1)); }
-
-const static inline mat4& operator *= (mat4 &v0, const mat4 &v1) { return ((v0 = mat4_mul(v0, v1))); }
-
-static inline bool operator == (const mat4 &v0, const mat4 &v1) { return (mat4_equals(v0, v1)); }
-
-static inline bool operator != (const mat4 &v0, const mat4 &v1) { return (!mat4_equals(v0, v1)); }
-
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
-# endif /* __cplusplus */
-#
 #endif /* _mat4_h_ */
