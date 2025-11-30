@@ -323,6 +323,25 @@ static inline mat4 mat4_rotatev(const vec3 angle) {
     return (value);
 }
 
+static inline mat4 mat4_lookat(const vec3 eye, const vec3 center, const vec3 up) {
+    vec3 f, u, s;
+    f = vec3_sub(center, eye);
+    f = vec3_normalize(f);
+
+    s = vec3_cross(up, f);
+    s = vec3_normalize(s);
+
+    u = vec3_cross(f, s);
+
+    mat4 mat = mat4_zero();
+    mat.m0 = vec4_init(s.x, u.x, f.x, 0.0);
+    mat.m1 = vec4_init(s.y, u.y, f.y, 0.0);
+    mat.m2 = vec4_init(s.z, u.z, f.z, 0.0);
+    mat.m3 = vec4_init(-vec3_dot(s, eye), -vec3_dot(u, eye), -vec3_dot(f, eye), 1.0);
+    return (mat);
+}
+
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline float mat4_det(const mat4 m0) {
