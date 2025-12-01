@@ -82,6 +82,7 @@ static inline mat4 mat4_add(const mat4 m0, const mat4 m1) {
     mat.m1 = vec4_add(m0.m1, m1.m1);
     mat.m2 = vec4_add(m0.m2, m1.m2);
     mat.m3 = vec4_add(m0.m3, m1.m3);
+    
     return (mat);
 }
 
@@ -103,6 +104,7 @@ static inline mat4 mat4_sub(const mat4 m0, const mat4 m1) {
     mat.m1 = vec4_sub(m0.m1, m1.m1);
     mat.m2 = vec4_sub(m0.m2, m1.m2);
     mat.m3 = vec4_sub(m0.m3, m1.m3);
+    
     return (mat);
 }
 
@@ -120,25 +122,26 @@ const static inline mat4& operator -= (mat4 &v0, const mat4 &v1) { v0 = mat4_sub
 static inline mat4 mat4_mul(const mat4 m0, const mat4 m1) {
     mat4 mat;
 
-    mat.m00 = m0.m00 * m1.m00 + m0.m01 * m1.m10 + m0.m02 * m1.m20 + m0.m03 * m1.m30;
-    mat.m01 = m0.m00 * m1.m01 + m0.m01 * m1.m11 + m0.m02 * m1.m21 + m0.m03 * m1.m31;
-    mat.m02 = m0.m00 * m1.m02 + m0.m01 * m1.m12 + m0.m02 * m1.m22 + m0.m03 * m1.m32;
-    mat.m03 = m0.m00 * m1.m03 + m0.m01 * m1.m13 + m0.m02 * m1.m23 + m0.m03 * m1.m33;
-    
-    mat.m10 = m0.m10 * m1.m10 + m0.m11 * m1.m10 + m0.m12 * m1.m20 + m0.m13 * m1.m30;
-    mat.m11 = m0.m10 * m1.m11 + m0.m11 * m1.m11 + m0.m12 * m1.m21 + m0.m13 * m1.m31;
-    mat.m12 = m0.m10 * m1.m12 + m0.m11 * m1.m12 + m0.m12 * m1.m22 + m0.m13 * m1.m32;
-    mat.m13 = m0.m10 * m1.m13 + m0.m11 * m1.m13 + m0.m12 * m1.m23 + m0.m13 * m1.m33;
-    
-    mat.m20 = m0.m20 * m1.m20 + m0.m21 * m1.m10 + m0.m22 * m1.m20 + m0.m23 * m1.m30;
-    mat.m21 = m0.m20 * m1.m21 + m0.m21 * m1.m11 + m0.m22 * m1.m21 + m0.m23 * m1.m31;
-    mat.m22 = m0.m20 * m1.m22 + m0.m21 * m1.m12 + m0.m22 * m1.m22 + m0.m23 * m1.m32;
-    mat.m23 = m0.m20 * m1.m23 + m0.m21 * m1.m13 + m0.m22 * m1.m23 + m0.m23 * m1.m33;
-    
-    mat.m30 = m0.m30 * m1.m30 + m0.m31 * m1.m10 + m0.m32 * m1.m20 + m0.m33 * m1.m30;
-    mat.m31 = m0.m30 * m1.m31 + m0.m31 * m1.m11 + m0.m32 * m1.m21 + m0.m33 * m1.m31;
-    mat.m32 = m0.m30 * m1.m32 + m0.m31 * m1.m12 + m0.m32 * m1.m22 + m0.m33 * m1.m32;
-    mat.m33 = m0.m30 * m1.m33 + m0.m31 * m1.m13 + m0.m32 * m1.m23 + m0.m33 * m1.m33;
+    mat.m00 = m0.m00*m1.m00 + m0.m01*m1.m10 + m0.m02*m1.m20 + m0.m03*m1.m30;
+    mat.m01 = m0.m00*m1.m01 + m0.m01*m1.m11 + m0.m02*m1.m21 + m0.m03*m1.m31;
+    mat.m02 = m0.m00*m1.m02 + m0.m01*m1.m12 + m0.m02*m1.m22 + m0.m03*m1.m32;
+    mat.m03 = m0.m00*m1.m03 + m0.m01*m1.m13 + m0.m02*m1.m23 + m0.m03*m1.m33;
+
+    mat.m10 = m0.m10*m1.m00 + m0.m11*m1.m10 + m0.m12*m1.m20 + m0.m13*m1.m30;
+    mat.m11 = m0.m10*m1.m01 + m0.m11*m1.m11 + m0.m12*m1.m21 + m0.m13*m1.m31;
+    mat.m12 = m0.m10*m1.m02 + m0.m11*m1.m12 + m0.m12*m1.m22 + m0.m13*m1.m32;
+    mat.m13 = m0.m10*m1.m03 + m0.m11*m1.m13 + m0.m12*m1.m23 + m0.m13*m1.m33;
+
+    mat.m20 = m0.m20*m1.m00 + m0.m21*m1.m10 + m0.m22*m1.m20 + m0.m23*m1.m30;
+    mat.m21 = m0.m20*m1.m01 + m0.m21*m1.m11 + m0.m22*m1.m21 + m0.m23*m1.m31;
+    mat.m22 = m0.m20*m1.m02 + m0.m21*m1.m12 + m0.m22*m1.m22 + m0.m23*m1.m32;
+    mat.m23 = m0.m20*m1.m03 + m0.m21*m1.m13 + m0.m22*m1.m23 + m0.m23*m1.m33;
+
+    mat.m30 = m0.m30*m1.m00 + m0.m31*m1.m10 + m0.m32*m1.m20 + m0.m33*m1.m30;
+    mat.m31 = m0.m30*m1.m01 + m0.m31*m1.m11 + m0.m32*m1.m21 + m0.m33*m1.m31;
+    mat.m32 = m0.m30*m1.m02 + m0.m31*m1.m12 + m0.m32*m1.m22 + m0.m33*m1.m32;
+    mat.m33 = m0.m30*m1.m03 + m0.m31*m1.m13 + m0.m32*m1.m23 + m0.m33*m1.m33;
+
     return (mat);
 }
 
@@ -155,8 +158,8 @@ static inline mat4 mat4_mulf(const mat4 m0, const float f) {
 # if defined (__cplusplus)
 #  if !defined (MATH_DISABLE_CPP_OPERATORS)
 
-static inline mat4 operator * (const mat4 &v0, const mat4 &v1)   { return (mat4_mul(v0, v1)); }
-const static inline mat4& operator *= (mat4 &v0, const mat4 &v1) { v0 = mat4_mul(v0, v1); return (v0); }
+static inline mat4 operator * (const mat4 v0, const mat4 v1)   { return (mat4_mul(v0, v1)); }
+const static inline mat4& operator *= (mat4 &v0, const mat4 v1) { v0 = mat4_mul(v0, v1); return (v0); }
 
 #  endif /* MATH_DISABLE_CPP_OPERATORS */
 # endif /* __cplusplus */
@@ -228,27 +231,30 @@ static inline mat4 mat4_scale(const vec3 v0) {
 }
 
 static inline mat4 mat4_rotate(const vec3 axis, const float angle) {
-    float sinres = sin(angle),
-          cosres = cos(angle);
+    float c = cos(angle);
+    float s = sin(angle);
+    float t = 1.0f - c;
 
-    vec3 axisn = vec3_normalize(axis),
-         vec   = vec3_mulf(axisn, sinres);
+    vec3 axisn = vec3_normalize(axis);
+    float x = axisn.x,
+          y = axisn.y,
+          z = axisn.z;
 
-    mat4 value = mat4_identity();
+    mat4 m = mat4_identity();
 
-    value.m00  =  cosres; 
-    value.m01  = -vec.z;
-    value.m02  =  vec.y;
-    
-    value.m10  =  vec.z;
-    value.m12  =  cosres;
-    value.m12  = -vec.x;
-    
-    value.m20  = -vec.y;
-    value.m21  =  vec.x;
-    value.m22  =  cosres;
-    
-    return (value);
+    m.m00 = t*x*x + c;
+    m.m01 = t*y*x + s*z;
+    m.m02 = t*z*x - s*y;
+
+    m.m10 = t*x*y - s*z;
+    m.m11 = t*y*y + c;
+    m.m12 = t*z*y + s*x;
+
+    m.m20 = t*x*z + s*y;
+    m.m21 = t*y*z - s*x;
+    m.m22 = t*z*z + c;
+
+    return (m);
 }
 
 static inline mat4 mat4_rotate_x(const float angle) {
@@ -363,7 +369,7 @@ static inline const char *mat4_string(const mat4 m0) {
     strcat(buf, "[ "), strcat(buf, vec4_string(m0.m0)); strcat(buf, " ]\n");
     strcat(buf, "[ "), strcat(buf, vec4_string(m0.m1)); strcat(buf, " ]\n");
     strcat(buf, "[ "), strcat(buf, vec4_string(m0.m2)); strcat(buf, " ]\n");
-    strcat(buf, "[ "), strcat(buf, vec4_string(m0.m3)); strcat(buf, " ]\n");
+    strcat(buf, "[ "), strcat(buf, vec4_string(m0.m3)); strcat(buf, " ]");
     return (buf);
 }
 

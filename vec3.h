@@ -114,7 +114,7 @@ static inline vec3 vec3_clamp01(const vec3 v0) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float vec3_dis(const vec3 v0, const vec3 v1) {
+static inline float vec3_distance(const vec3 v0, const vec3 v1) {
     return (sqrt(pow(v0.x - v1.x, 2.0) + pow(v0.y - v1.y, 2.0) + pow(v0.z - v1.z, 2.0)));
 }
 

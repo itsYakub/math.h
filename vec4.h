@@ -110,7 +110,7 @@ static inline vec4 vec4_clamp01(const vec4 v0) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float vec4_dis(const vec4 v0, const vec4 v1) {
+static inline float vec4_distance(const vec4 v0, const vec4 v1) {
     return (sqrt(pow(v0.x - v1.x, 2.0) + pow(v0.y - v1.y, 2.0) + pow(v0.z - v1.z, 2.0) + pow(v0.w - v1.w, 2.0)));
 }
 
