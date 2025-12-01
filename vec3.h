@@ -144,6 +144,10 @@ static inline vec3 vec3_normalize(const vec3 v0) {
     return (value);
 }
 
+static inline vec3 vec3_scale(const vec3 v0, const float f0) {
+    return (vec3_mulf(v0, f0));
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline const float *vec3_ptr(const vec3 *v0) { return (&v0->x); }

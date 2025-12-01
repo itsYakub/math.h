@@ -228,46 +228,30 @@ static inline mat4 mat4_scale(const vec3 v0) {
 }
 
 static inline mat4 mat4_rotate(const vec3 axis, const float angle) {
-    float x = axis.x,
-          y = axis.y,
-          z = axis.z;
-
-    float lensqr = x * x + y * y + z * z;
-    if (lensqr != 1.0 && lensqr != 0.0) {
-        float leninv = 1.0 / sqrt(lensqr);
-        x *= leninv;
-        y *= leninv;
-        z *= leninv;
-    }
-
     float sinres = sin(angle),
           cosres = cos(angle);
-    float t = 1.0 - cosres;
 
-    mat4 value = mat4_zero();
-    value.m00 = x * x * t + cosres;
-    value.m01 = x * y * t + z * sinres;
-    value.m02 = x * z * t - y * sinres;
-    value.m03 = 0.0;
+    vec3 axisn = vec3_normalize(axis),
+         vec   = vec3_mulf(axisn, sinres);
+
+    mat4 value = mat4_identity();
+
+    value.m00  =  cosres; 
+    value.m01  = -vec.z;
+    value.m02  =  vec.y;
     
-    value.m10 = y * x * t - z * sinres;
-    value.m12 = y * y * t + cosres;
-    value.m12 = y * z * t + x * sinres;
-    value.m13 = 0.0;
+    value.m10  =  vec.z;
+    value.m12  =  cosres;
+    value.m12  = -vec.x;
     
-    value.m20 = z * x * t + y * sinres;
-    value.m21 = z * y * t - cosres;
-    value.m22 = z * z * t + x * sinres;
-    value.m23 = 0.0;
+    value.m20  = -vec.y;
+    value.m21  =  vec.x;
+    value.m22  =  cosres;
     
-    value.m30 = 0.0;
-    value.m31 = 0.0;
-    value.m32 = 0.0;
-    value.m33 = 1.0;
     return (value);
 }
 
-static inline mat4 mat4_rotatex(const float angle) {
+static inline mat4 mat4_rotate_x(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
 
@@ -279,7 +263,7 @@ static inline mat4 mat4_rotatex(const float angle) {
     return (value);
 }
 
-static inline mat4 mat4_rotatey(const float angle) {
+static inline mat4 mat4_rotate_y(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
 
@@ -291,7 +275,7 @@ static inline mat4 mat4_rotatey(const float angle) {
     return (value);
 }
 
-static inline mat4 mat4_rotatez(const float angle) {
+static inline mat4 mat4_rotate_z(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
 
@@ -303,7 +287,7 @@ static inline mat4 mat4_rotatez(const float angle) {
     return (value);
 }
 
-static inline mat4 mat4_rotatev(const vec3 angle) {
+static inline mat4 mat4_rotate_v(const vec3 angle) {
     float sinx = sin(-angle.x), cosx = cos(-angle.x),
           siny = sin(-angle.y), cosy = cos(-angle.y),
           sinz = sin(-angle.z), cosz = cos(-angle.z);
