@@ -91,11 +91,12 @@ static inline mat2 mat2_sub(const mat2 m0, const mat2 m1) {
 static inline mat2 mat2_mul(const mat2 m0, const mat2 m1) {
     mat2 mat;
 
-    mat.m00 = m0.m00 * m1.m00 + m0.m01 * m1.m10;
-    mat.m01 = m0.m00 * m1.m01 + m0.m01 * m1.m11;
-    
-    mat.m10 = m0.m10 * m1.m10 + m0.m11 * m1.m10;
-    mat.m11 = m0.m10 * m1.m11 + m0.m11 * m1.m11;
+    mat.m00 = m0.m00 * m1.m00 + m0.m10 * m1.m01;
+    mat.m01 = m0.m01 * m1.m00 + m0.m11 * m1.m01;
+
+    mat.m10 = m0.m00 * m1.m10 + m0.m10 * m1.m11;
+    mat.m11 = m0.m01 * m1.m10 + m0.m11 * m1.m11;
+
     return (mat);
 }
 

@@ -122,25 +122,25 @@ const static inline mat4& operator -= (mat4 &v0, const mat4 &v1) { v0 = mat4_sub
 static inline mat4 mat4_mul(const mat4 m0, const mat4 m1) {
     mat4 mat;
 
-    mat.m00 = m0.m00*m1.m00 + m0.m01*m1.m10 + m0.m02*m1.m20 + m0.m03*m1.m30;
-    mat.m01 = m0.m00*m1.m01 + m0.m01*m1.m11 + m0.m02*m1.m21 + m0.m03*m1.m31;
-    mat.m02 = m0.m00*m1.m02 + m0.m01*m1.m12 + m0.m02*m1.m22 + m0.m03*m1.m32;
-    mat.m03 = m0.m00*m1.m03 + m0.m01*m1.m13 + m0.m02*m1.m23 + m0.m03*m1.m33;
+    mat.m00 = m0.m00 * m1.m00 + m0.m10 * m1.m01 + m0.m20 * m1.m02 + m0.m30 * m1.m03;
+    mat.m01 = m0.m01 * m1.m00 + m0.m11 * m1.m01 + m0.m21 * m1.m02 + m0.m31 * m1.m03;
+    mat.m02 = m0.m02 * m1.m00 + m0.m12 * m1.m01 + m0.m22 * m1.m02 + m0.m32 * m1.m03;
+    mat.m03 = m0.m03 * m1.m00 + m0.m13 * m1.m01 + m0.m23 * m1.m02 + m0.m33 * m1.m03;
 
-    mat.m10 = m0.m10*m1.m00 + m0.m11*m1.m10 + m0.m12*m1.m20 + m0.m13*m1.m30;
-    mat.m11 = m0.m10*m1.m01 + m0.m11*m1.m11 + m0.m12*m1.m21 + m0.m13*m1.m31;
-    mat.m12 = m0.m10*m1.m02 + m0.m11*m1.m12 + m0.m12*m1.m22 + m0.m13*m1.m32;
-    mat.m13 = m0.m10*m1.m03 + m0.m11*m1.m13 + m0.m12*m1.m23 + m0.m13*m1.m33;
+    mat.m10 = m0.m00 * m1.m10 + m0.m10 * m1.m11 + m0.m20 * m1.m12 + m0.m30 * m1.m13;
+    mat.m11 = m0.m01 * m1.m10 + m0.m11 * m1.m11 + m0.m21 * m1.m12 + m0.m31 * m1.m13;
+    mat.m12 = m0.m02 * m1.m10 + m0.m12 * m1.m11 + m0.m22 * m1.m12 + m0.m32 * m1.m13;
+    mat.m13 = m0.m03 * m1.m10 + m0.m13 * m1.m11 + m0.m23 * m1.m12 + m0.m33 * m1.m13;
 
-    mat.m20 = m0.m20*m1.m00 + m0.m21*m1.m10 + m0.m22*m1.m20 + m0.m23*m1.m30;
-    mat.m21 = m0.m20*m1.m01 + m0.m21*m1.m11 + m0.m22*m1.m21 + m0.m23*m1.m31;
-    mat.m22 = m0.m20*m1.m02 + m0.m21*m1.m12 + m0.m22*m1.m22 + m0.m23*m1.m32;
-    mat.m23 = m0.m20*m1.m03 + m0.m21*m1.m13 + m0.m22*m1.m23 + m0.m23*m1.m33;
+    mat.m20 = m0.m00 * m1.m20 + m0.m10 * m1.m21 + m0.m20 * m1.m22 + m0.m30 * m1.m23;
+    mat.m21 = m0.m01 * m1.m20 + m0.m11 * m1.m21 + m0.m21 * m1.m22 + m0.m31 * m1.m23;
+    mat.m22 = m0.m02 * m1.m20 + m0.m12 * m1.m21 + m0.m22 * m1.m22 + m0.m32 * m1.m23;
+    mat.m23 = m0.m03 * m1.m20 + m0.m13 * m1.m21 + m0.m23 * m1.m22 + m0.m33 * m1.m23;
 
-    mat.m30 = m0.m30*m1.m00 + m0.m31*m1.m10 + m0.m32*m1.m20 + m0.m33*m1.m30;
-    mat.m31 = m0.m30*m1.m01 + m0.m31*m1.m11 + m0.m32*m1.m21 + m0.m33*m1.m31;
-    mat.m32 = m0.m30*m1.m02 + m0.m31*m1.m12 + m0.m32*m1.m22 + m0.m33*m1.m32;
-    mat.m33 = m0.m30*m1.m03 + m0.m31*m1.m13 + m0.m32*m1.m23 + m0.m33*m1.m33;
+    mat.m30 = m0.m00 * m1.m30 + m0.m10 * m1.m31 + m0.m20 * m1.m32 + m0.m30 * m1.m33;
+    mat.m31 = m0.m01 * m1.m30 + m0.m11 * m1.m31 + m0.m21 * m1.m32 + m0.m31 * m1.m33;
+    mat.m32 = m0.m02 * m1.m30 + m0.m12 * m1.m31 + m0.m22 * m1.m32 + m0.m32 * m1.m33;
+    mat.m33 = m0.m03 * m1.m30 + m0.m13 * m1.m31 + m0.m23 * m1.m32 + m0.m33 * m1.m33;
 
     return (mat);
 }
@@ -220,7 +220,7 @@ static inline mat4 mat4_translate(const vec3 v0) {
     return ((mat4) {{ 1.0,  0.0,  0.0,  0.0,
                       0.0,  1.0,  0.0,  0.0,
                       0.0,  0.0,  1.0,  0.0,
-                      v0.x, v0.y, v0.z, 1.0   }} );
+                      v0.x, v0.y, v0.z, 1.0  }} );
 }
 
 static inline mat4 mat4_scale(const vec3 v0) {
