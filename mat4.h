@@ -214,10 +214,10 @@ static inline mat4 mat4_persp(const float fieldOfView, const float aspect, const
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat4 mat4_translate(const vec3 v0) {
-    return ((mat4) {{ 1.0, 0.0, 0.0, v0.x,
-                      0.0, 1.0, 0.0, v0.y,
-                      0.0, 0.0, 1.0, v0.z,
-                      0.0, 0.0, 0.0, 1.0   }} );
+    return ((mat4) {{ 1.0,  0.0,  0.0,  0.0,
+                      0.0,  1.0,  0.0,  0.0,
+                      0.0,  0.0,  1.0,  0.0,
+                      v0.x, v0.y, v0.z, 1.0   }} );
 }
 
 static inline mat4 mat4_scale(const vec3 v0) {
