@@ -35,7 +35,7 @@ MATHAPI vec4 vec4Copy(const vec4 v0) { return ((vec4) { .x = v0.x, .y = v0.y, .z
 
 MATHAPI vec4 vec4Zero(void) { return (vec4Init(0.0, 0.0, 0.0, 0.0)); }
 
-MATHAPI vec4 vec4_one(void) { return (vec4Init(1.0, 1.0, 1.0, 1.0)); }
+MATHAPI vec4 vec4One(void) { return (vec4Init(1.0, 1.0, 1.0, 1.0)); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 

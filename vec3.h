@@ -41,11 +41,11 @@ MATHAPI vec3 vec3Zero(void) {
     return ((vec3) { .x = 0.0, .y = 0.0, .z = 0.0 } );
 }
 
-MATHAPI vec3 vec3_one(void) {
+MATHAPI vec3 vec3One(void) {
     return ((vec3) { .x = 1.0, .y = 1.0, .z = 1.0 } );
 }
 
-MATHAPI vec3 vec3_up(void) {
+MATHAPI vec3 vec3Up(void) {
     return ((vec3) { .x = 0.0, .y = 1.0, .z = 0.0 } );
 }
 
@@ -57,15 +57,15 @@ MATHAPI vec3 vec3Left(void) {
     return ((vec3) { .x = -1.0, .y = 0.0, .z = 0.0 } );
 }
 
-MATHAPI vec3 vec3_right(void) {
+MATHAPI vec3 vec3Right(void) {
     return ((vec3) { .x = 1.0, .y = 0.0, .z = 0.0 } );
 }
 
-MATHAPI vec3 vec3_forward(void) {
+MATHAPI vec3 vec3Forward(void) {
     return ((vec3) { .x = 0.0, .y = 0.0, .z = 1.0 } );
 }
 
-MATHAPI vec3 vec3_backward(void) {
+MATHAPI vec3 vec3Backward(void) {
     return ((vec3) { .x = 0.0, .y = 0.0, .z = -1.0 } );
 }
 
