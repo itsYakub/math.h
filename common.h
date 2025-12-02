@@ -15,6 +15,19 @@
 #  include <cstddef>
 # endif /* __cplusplus */
 #
+# if !defined MATHAPI
+#  if !defined (MATH_DISABLE_STATIC_INLINE)
+#   define MATHAPI static inline
+#   define MATH_IMPLEMENTATION 1
+#  else
+#   if defined (__cplusplus)
+#    define MATHAPI extern "C"
+#   else
+#    define MATHAPI extern
+#   endif /* __cplusplus */
+#  endif /* MATH_DISABLE_STATIC_INLINE */
+# endif /* MATHAPI*/
+#
 # if !defined (E)
 #  define E 2.718281828459
 # endif /* E */
@@ -37,29 +50,19 @@ extern "C" {
 
 # endif /* __cplusplus */
 
-/* ---------------------------------------------------------------------------------------------------- */
+MATHAPI float _abs(const float);
 
-static inline float _abs(const float f0) { return (f0 < 0.0 ? -f0 : f0); }
+MATHAPI float _trunc(const float);
 
-static inline float _trunc(const float f0) { return (f0 - (long) f0); }
+MATHAPI float _mod(const float, const float);
 
-static inline float _mod(const float f0, const float f1) { return (f0 - (long) (f0 / f1) * f1); }
+MATHAPI float _ceil(const float);
 
-static inline float _ceil(const float f0) { return ((long) f0 + 1.0); }
+MATHAPI float _floor(const float);
 
-static inline float _floor(const float f0) { return ((long) f0); }
+MATHAPI float _round(const float);
 
-static inline float _round(const float f0) { return (_trunc(f0) < 0.5 ? _floor(f0) : _ceil(f0)); }
-
-static inline size_t _fact(size_t v0) {
-    if ((long long) v0 < 0) { return (0); }
-    else if (!v0) { return (1); }
-
-    size_t value = 1.0;
-    while (v0) { value *= v0, v0--; }
-
-    return (value);
-}
+MATHAPI size_t _fact(size_t);
 
 # if !defined (abs)
 #  define abs(x)     _abs(x)
@@ -85,15 +88,9 @@ static inline size_t _fact(size_t v0) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _min(const float f0, const float f1) {
-    if (f0 < f1) { return (f0); }
-                 { return (f1); }
-}
+MATHAPI float _min(const float, const float);
 
-static inline float _max(const float f0, const float f1) {
-    if (f0 > f1) { return (f0); }
-                 { return (f1); }
-}
+MATHAPI float _max(const float, const float);
 
 # if !defined (min)
 #  define min(x, y)  _min(x, y)
@@ -104,17 +101,7 @@ static inline float _max(const float f0, const float f1) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _exp(const float f0) {
-    if (f0 == 1.0) { return (E); }
-
-    float result = 1.0;
-    float term   = 1.0;
-    for (size_t n = 1; n < 256; n++) {
-        term *= f0 / n, result += term;
-    }
-
-    return (result);
-}
+MATHAPI float _exp(const float f0);
 
 # if !defined (exp)
 #  define exp(x)     _exp(x)
@@ -122,19 +109,9 @@ static inline float _exp(const float f0) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _logn(const float f0) {
-    float f1 = f0 - 1.0,
-          f2 = f1;
+MATHAPI float _logn(const float);
 
-    do {
-        f1 = f2;
-        f2 = f1 + 2.0 * (f0 - _exp(f1)) / (f0 + _exp(f1));
-    } while (_abs(f1 - f2) > EPSILON);
-    return (f2);
-}
-
-static inline float _log(const float f0, const float f1) { return (_logn(f0) / _logn(f1)); }
-
+MATHAPI float _log(const float, const float);
 
 # if !defined (logn)
 #  define logn(x)    _logn(x)
@@ -145,42 +122,17 @@ static inline float _log(const float f0, const float f1) { return (_logn(f0) / _
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _pow(const float f0, const float f1) {
-    if (f1 < 0.0)  { return (1.0 / _pow(f0, _abs(f1))); }
-    if (f1 - (int) f1 == 0.0) {
-        float value = 1.0;
+MATHAPI float _pow(const float, const float);
 
-        for (size_t n = 0; n < f1; n++) {
-            value *= f0;
-        }
-        return (value);
-    }
+MATHAPI float _pow2(const float);
 
-    return (_exp(f1 * _logn(f0)));
-}
-
-static inline float _pow2(const float f0) { return (f0 * f0); }
-
-static inline float _sqrt(const float f0) {
-    float low = min(1.0, f0);
-    float high = max(1.0, f0);
-    while (100.0 * low * low < f0)   { low *= 10; }
-    while (0.01 * high * high > f0)  { high *= 0.1; }
-
-    float middle = 0.0;
-    for (size_t i = 0; i < 100; i++) {
-        middle = (low + high) / 2.0;
-
-        if (middle * middle == f0) { return (middle); }
-        if (middle * middle > f0)  { high = middle; }
-        else                       { low = middle; }
-    }
-
-    return (middle);
-}
+MATHAPI float _sqrt(const float);
 
 # if !defined (pow)
 #  define pow(x, y)  _pow(x, y)
+# endif /* logn */
+# if !defined (pow2)
+#  define pow2(x)    _pow2(x)
 # endif /* logn */
 # if !defined (sqrt)
 #  define sqrt(x)    _sqrt(x)
@@ -188,7 +140,7 @@ static inline float _sqrt(const float f0) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _dot(const float f0, const float f1) { return (f0 * f1); }
+MATHAPI float _dot(const float, const float);
 
 # if !defined (dot)
 #  define dot(x, y) _dot(x, y)
@@ -196,8 +148,9 @@ static inline float _dot(const float f0, const float f1) { return (f0 * f1); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _degToRad(const float f0) { return (f0 * (PI / 180.0)); }
-static inline float _radToDeg(const float f0) { return (f0 * (180.0 / PI)); }
+MATHAPI float _degToRad(const float);
+
+MATHAPI float _radToDeg(const float);
 
 # if !defined (degToRad)
 #  define degToRad(x)    _degToRad(x)
@@ -208,27 +161,13 @@ static inline float _radToDeg(const float f0) { return (f0 * (180.0 / PI)); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _sin(float f0) {
-    float sign = 1.0;
-    while (f0 < -PI / 2.0)    { f0 += PI, sign *= -1.0; }
-    while (f0 > PI / 2.0)     { f0 -= PI, sign *= -1.0; }
-    
-    float value = 0.0;
-    for (size_t n = 0 ;; n++) {
-        float t = (_pow(-1.0, n) / _fact(2.0 * n + 1.0)) * _pow(f0, 2.0 * n + 1.0);
-        if (_abs(t) < EPSILON) { break; }
+MATHAPI float _sin(float);
 
-        value += t;
-    }
+MATHAPI float _cos(float);
 
-    return (value * sign);
-}
+MATHAPI float _tan(float);
 
-static inline float _cos(float f0) { return (_sin(_degToRad(90.0) - f0)); }
-
-static inline float _tan(float f0) { return (_sin(f0) / _cos(f0)); }
-
-static inline float _cot(float f0) { return (1.0 / _tan(f0)); }
+MATHAPI float _cot(float);
 
 # if !defined (sin)
 #  define sin(x)     _sin(x)
@@ -245,41 +184,15 @@ static inline float _cot(float f0) { return (1.0 / _tan(f0)); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _asin(float f0) {
-    float value,
-          sign;
+MATHAPI float _asin(float);
 
-    f0 = _abs(f0);
-    sign = (f0 < 0.0) ? 1.0 : 0.0;
-    value = -0.0187293;
-    value *= f0;
-    value += 0.0742610;
-    value *= f0;
-    value -= 0.2121144;
-    value *= f0;
-    value += 1.5707288;
-    value = PI / 2.0 - _sqrt(1.0 - f0) * value;
-    return (value - 2.0 * sign * value);
-}
+MATHAPI float _acos(float);
 
-static inline float _acos(float f0) { return (PI / 2.0 - _asin(f0)); }
+MATHAPI float _atan(float);
 
-static inline float _atan(float f0) { return (_asin(f0 / _sqrt(1.0 + f0 * f0))); }
+MATHAPI float _atan2(float, float);
 
-static inline float _atan2(float f0, float f1) {
-    if (f1 > 0.0)       { return (_atan(f0 / f1)); }
-    else if (f1 < 0.0)  {
-        if (f0 >= 0.0)  { return (_atan(f0 / f1) + PI); }
-        if (f0 < 0.0)   { return (_atan(f0 / f1) - PI); }
-    }
-    else if (f1 == 0.0) {
-        if (f0 > 0.0)   { return (PI / 2.0); }
-        if (f0 < 0.0)   { return (-PI / 2.0); }
-    }
-    return (NAN);
-}
-
-static inline float _acot(float f0) { return (PI / 2.0 - _atan(f0)); }
+MATHAPI float _acot(float f0);
 
 # if !defined (asin)
 #  define asin(x)     _asin(x)
@@ -299,13 +212,9 @@ static inline float _acot(float f0) { return (PI / 2.0 - _atan(f0)); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _clamp(const float f0, const float min, const float max) {
-    if (f0 < min) { return (min); }
-    if (f0 > max) { return (max); }
-                  { return (f0); }
-}
+MATHAPI float _clamp(const float, const float, const float);
 
-static inline float _clamp01(const float f0) { return (_clamp(f0, 0.0, 1.0)); }
+MATHAPI float _clamp01(const float);
 
 # if !defined (clamp)
 #  define clamp(x, y, z) _clamp(x, y, z)
@@ -323,7 +232,233 @@ static inline float _clamp01(const float f0) { return (_clamp(f0, 0.0, 1.0)); }
 #  define isdigit(c) (c >= '0' && c <= '9')
 # endif /* isdigit */
 
-static inline signed int _atoi(const char *str) {
+MATHAPI signed int _atoi(const char *);
+
+MATHAPI signed int _atou(const char *);
+
+MATHAPI double _atod(const char *);
+
+MATHAPI float _atof(const char *);
+
+# if !defined (atoi)
+#  define atoi(s)   _atoi(s)
+# endif /* atoi */
+# if !defined (atou)
+#  define atou(s)   _atou(s)
+# endif /* atou */
+# if !defined (atod)
+#  define atod(s)   _atod(s)
+# endif /* atod */
+# if !defined (atof)
+#  define atof(s)   _atof(s)
+# endif /* atof */
+# undef isspace
+# undef isdigit
+
+# if defined (__cplusplus)
+
+}
+
+# endif /* __cplusplus */
+#
+# if defined (MATH_IMPLEMENTATION)
+#
+#  if defined (__cplusplus)
+
+extern "C" {
+
+#  endif /* __cplusplus */
+
+MATHAPI float _abs(const float f0) { return (f0 < 0.0 ? -f0 : f0); }
+
+MATHAPI float _trunc(const float f0) { return (f0 - (long) f0); }
+
+MATHAPI float _mod(const float f0, const float f1) { return (f0 - (long) (f0 / f1) * f1); }
+
+MATHAPI float _ceil(const float f0) { return ((long) f0 + 1.0); }
+
+MATHAPI float _floor(const float f0) { return ((long) f0); }
+
+MATHAPI float _round(const float f0) { return (_trunc(f0) < 0.5 ? _floor(f0) : _ceil(f0)); }
+
+MATHAPI size_t _fact(size_t v0) {
+    if ((long long) v0 < 0) { return (0); }
+    else if (!v0) { return (1); }
+
+    size_t value = 1.0;
+    while (v0) { value *= v0, v0--; }
+
+    return (value);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI float _min(const float f0, const float f1) {
+    if (f0 < f1) { return (f0); }
+                 { return (f1); }
+}
+
+MATHAPI float _max(const float f0, const float f1) {
+    if (f0 > f1) { return (f0); }
+                 { return (f1); }
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI float _exp(const float f0) {
+    if (f0 == 1.0) { return (E); }
+
+    float result = 1.0;
+    float term   = 1.0;
+    for (size_t n = 1; n < 256; n++) {
+        term *= f0 / n, result += term;
+    }
+
+    return (result);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI float _logn(const float f0) {
+    float f1 = f0 - 1.0,
+          f2 = f1;
+
+    do {
+        f1 = f2;
+        f2 = f1 + 2.0 * (f0 - _exp(f1)) / (f0 + _exp(f1));
+    } while (_abs(f1 - f2) > EPSILON);
+    return (f2);
+}
+
+MATHAPI float _log(const float f0, const float f1) { return (_logn(f0) / _logn(f1)); }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI float _pow(const float f0, const float f1) {
+    if (f1 < 0.0)  { return (1.0 / _pow(f0, _abs(f1))); }
+    if (f1 - (int) f1 == 0.0) {
+        float value = 1.0;
+
+        for (size_t n = 0; n < f1; n++) {
+            value *= f0;
+        }
+        return (value);
+    }
+
+    return (_exp(f1 * _logn(f0)));
+}
+
+MATHAPI float _pow2(const float f0) { return (f0 * f0); }
+
+MATHAPI float _sqrt(const float f0) {
+    float low = min(1.0, f0);
+    float high = max(1.0, f0);
+    while (100.0 * low * low < f0)   { low *= 10; }
+    while (0.01 * high * high > f0)  { high *= 0.1; }
+
+    float middle = 0.0;
+    for (size_t i = 0; i < 100; i++) {
+        middle = (low + high) / 2.0;
+
+        if (middle * middle == f0) { return (middle); }
+        if (middle * middle > f0)  { high = middle; }
+        else                       { low = middle; }
+    }
+
+    return (middle);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI float _dot(const float f0, const float f1) { return (f0 * f1); }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI float _degToRad(const float f0) { return (f0 * (PI / 180.0)); }
+MATHAPI float _radToDeg(const float f0) { return (f0 * (180.0 / PI)); }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI float _sin(float f0) {
+    float sign = 1.0;
+    while (f0 < -PI / 2.0)    { f0 += PI, sign *= -1.0; }
+    while (f0 > PI / 2.0)     { f0 -= PI, sign *= -1.0; }
+    
+    float value = 0.0;
+    for (size_t n = 0 ;; n++) {
+        float t = (_pow(-1.0, n) / _fact(2.0 * n + 1.0)) * _pow(f0, 2.0 * n + 1.0);
+        if (_abs(t) < EPSILON) { break; }
+
+        value += t;
+    }
+
+    return (value * sign);
+}
+
+MATHAPI float _cos(float f0) { return (_sin(_degToRad(90.0) - f0)); }
+
+MATHAPI float _tan(float f0) { return (_sin(f0) / _cos(f0)); }
+
+MATHAPI float _cot(float f0) { return (1.0 / _tan(f0)); }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI float _asin(float f0) {
+    float value,
+          sign;
+
+    f0 = _abs(f0);
+    sign = (f0 < 0.0) ? 1.0 : 0.0;
+    value = -0.0187293;
+    value *= f0;
+    value += 0.0742610;
+    value *= f0;
+    value -= 0.2121144;
+    value *= f0;
+    value += 1.5707288;
+    value = PI / 2.0 - _sqrt(1.0 - f0) * value;
+    return (value - 2.0 * sign * value);
+}
+
+MATHAPI float _acos(float f0) { return (PI / 2.0 - _asin(f0)); }
+
+MATHAPI float _atan(float f0) { return (_asin(f0 / _sqrt(1.0 + f0 * f0))); }
+
+MATHAPI float _atan2(float f0, float f1) {
+    if (f1 > 0.0)       { return (_atan(f0 / f1)); }
+    else if (f1 < 0.0)  {
+        if (f0 >= 0.0)  { return (_atan(f0 / f1) + PI); }
+        if (f0 < 0.0)   { return (_atan(f0 / f1) - PI); }
+    }
+    else if (f1 == 0.0) {
+        if (f0 > 0.0)   { return (PI / 2.0); }
+        if (f0 < 0.0)   { return (-PI / 2.0); }
+    }
+    return (NAN);
+}
+
+MATHAPI float _acot(float f0) { return (PI / 2.0 - _atan(f0)); }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI float _clamp(const float f0, const float min, const float max) {
+    if (f0 < min) { return (min); }
+    if (f0 > max) { return (max); }
+                  { return (f0); }
+}
+
+MATHAPI float _clamp01(const float f0) { return (_clamp(f0, 0.0, 1.0)); }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+#  if !defined (isspace)
+#   define isspace(c) ((c >= '\t' && c <= '\r') || c == ' ')
+#  endif /* isspace */
+#  if !defined (isdigit)
+#   define isdigit(c) (c >= '0' && c <= '9')
+#  endif /* isdigit */
+
+MATHAPI signed int _atoi(const char *str) {
     while (isspace(*str)) { str++; }
 
     int sign = 1;
@@ -344,9 +479,9 @@ static inline signed int _atoi(const char *str) {
     return (value * sign);
 }
 
-static inline signed int _atou(const char *str) { return ((unsigned int) _atoi(str)); }
+MATHAPI signed int _atou(const char *str) { return ((unsigned int) _atoi(str)); }
 
-static inline double _atod(const char *str) {
+MATHAPI double _atod(const char *str) {
     while (isspace(*str)) { str++; }
 
     int sign = 1;
@@ -374,28 +509,15 @@ static inline double _atod(const char *str) {
     return ((value + fraction) * sign);
 }
 
-static inline float _atof(const char *str) { return ((float) _atod(str)); }
+MATHAPI float _atof(const char *str) { return ((float) _atod(str)); }
 
-# if !defined (atoi)
-#  define atoi(s)   _atoi(s)
-# endif /* atoi */
-# if !defined (atou)
-#  define atou(s)   _atou(s)
-# endif /* atou */
-# if !defined (atod)
-#  define atod(s)   _atod(s)
-# endif /* atod */
-# if !defined (atof)
-#  define atof(s)   _atof(s)
-# endif /* atof */
-# undef isspace
-# undef isdigit
+#  undef isspace
+#  undef isdigit
 
-/* ---------------------------------------------------------------------------------------------------- */
-
-# if defined (__cplusplus)
+#  if defined (__cplusplus)
 
 }
 
-# endif /* __cplusplus */
+#  endif /* __cplusplus */
+# endif /* MATH_IMPLEMENTATION */
 #endif /* _common_h_ */
