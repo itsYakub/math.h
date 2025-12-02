@@ -261,7 +261,11 @@ MATHAPI float _atof(const char *);
 
 # endif /* __cplusplus */
 #
+#
+#
 # if defined (MATH_IMPLEMENTATION)
+#
+#
 #
 #  if defined (__cplusplus)
 
