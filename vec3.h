@@ -1,5 +1,5 @@
 /*
- *  vec3.h - 3D Vector math module for C/C++
+ *  vec3.h - 2D Vector math module for C/C++
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -40,10 +40,6 @@ MATHAPI vec3 vec3_down(void);
 MATHAPI vec3 vec3_left(void);
 
 MATHAPI vec3 vec3_right(void);
-
-MATHAPI vec3 vec3_front(void);
-
-MATHAPI vec3 vec3_back(void);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -96,8 +92,6 @@ MATHAPI float vec3_distance(const vec3, const vec3);
 MATHAPI float vec3_len(const vec3);
 
 MATHAPI float vec3_dot(const vec3, const vec3);
-
-MATHAPI vec3 vec3_cross(const vec3, const vec3);
 
 MATHAPI vec3 vec3_normalize(const vec3);
 
@@ -153,86 +147,130 @@ MATHAPI bool operator != (const vec3 &, const vec3 &);
 
 extern "C" {
 
-# endif /* __cplusplus */
+#  endif /* __cplusplus */
 
-MATHAPI vec3 vec3_init(const float x, const float y, const float z) { return ((vec3) { .x = x, .y = y, .z = z } ); }
+MATHAPI vec3 vec3_init(const float x, const float y, const float z) {
+    return ((vec3) { .x = x, .y = y, .z = z } );
+}
 
-MATHAPI vec3 vec3_copy(const vec3 v0) { return ((vec3) { .x = v0.x, .y = v0.y, .z = v0.z } ); }
+MATHAPI vec3 vec3_copy(const vec3 v0) {
+    return ((vec3) { .x = v0.x, .y = v0.y, .z = v0.z } );
+}
 
-MATHAPI vec3 vec3_zero(void) { return (vec3_init(0.0, 0.0, 0.0)); }
+MATHAPI vec3 vec3_zero(void) {
+    return ((vec3) { .x = 0.0, .y = 0.0, .z = 0.0 } );
+}
 
-MATHAPI vec3 vec3_one(void) { return (vec3_init(1.0, 1.0, 1.0)); }
+MATHAPI vec3 vec3_one(void) {
+    return ((vec3) { .x = 1.0, .y = 1.0, .z = 1.0 } );
+}
 
-MATHAPI vec3 vec3_up(void) { return (vec3_init(0.0, 1.0, 0.0)); }
+MATHAPI vec3 vec3_up(void) {
+    return ((vec3) { .x = 0.0, .y = 1.0, .z = 0.0 } );
+}
 
-MATHAPI vec3 vec3_down(void) { return (vec3_init(0.0, -1.0, 0.0)); }
+MATHAPI vec3 vec3_down(void) {
+    return ((vec3) { .x = 0.0, .y = -1.0, .z = 0.0 } );
+}
 
-MATHAPI vec3 vec3_left(void) { return (vec3_init(-1.0, 0.0, 0.0)); }
+MATHAPI vec3 vec3_left(void) {
+    return ((vec3) { .x = -1.0, .y = 0.0, .z = 0.0 } );
+}
 
-MATHAPI vec3 vec3_right(void) { return (vec3_init(1.0, 0.0, 0.0)); }
+MATHAPI vec3 vec3_right(void) {
+    return ((vec3) { .x = 1.0, .y = 0.0, .z = 0.0 } );
+}
 
-MATHAPI vec3 vec3_front(void) { return (vec3_init(0.0, 0.0, 1.0)); }
+MATHAPI vec3 vec3_forward(void) {
+    return ((vec3) { .x = 0.0, .y = 0.0, .z = 1.0 } );
+}
 
-MATHAPI vec3 vec3_back(void) { return (vec3_init(0.0, 0.0, -1.0)); }
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-MATHAPI vec3 vec3_add(const vec3 v0, const vec3 v1) { return (vec3_init(v0.x + v1.x, v0.y + v1.y, v0.z + v1.z)); }
-
-MATHAPI vec3 vec3_addf(const vec3 v0, const float f) { return (vec3_init(v0.x + f, v0.y + f, v0.z + f)); }
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-MATHAPI vec3 vec3_sub(const vec3 v0, const vec3 v1) { return (vec3_init(v0.x - v1.x, v0.y - v1.y, v0.z - v1.z)); }
-
-MATHAPI vec3 vec3_subf(const vec3 v0, const float f) { return (vec3_init(v0.x - f, v0.y - f, v0.z - f)); }
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-MATHAPI vec3 vec3_mul(const vec3 v0, const vec3 v1) { return (vec3_init(v0.x * v1.x, v0.y * v1.y, v0.z * v1.z)); }
-
-MATHAPI vec3 vec3_mulf(const vec3 v0, const float f) { return (vec3_init(v0.x * f, v0.y * f, v0.z * f)); }
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-MATHAPI vec3 vec3_div(const vec3 v0, const vec3 v1) { return (vec3_init(v0.x / v1.x, v0.y / v1.y, v0.z / v1.z)); }
-
-MATHAPI vec3 vec3_divf(const vec3 v0, const float f) { return (vec3_init(v0.x / f, v0.y / f, v0.z / f)); }
+MATHAPI vec3 vec3_backward(void) {
+    return ((vec3) { .x = 0.0, .y = 0.0, .z = -1.0 } );
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-MATHAPI bool vec3_equals(const vec3 v0, const vec3 v1) { return (v0.x == v1.x && v0.y == v1.y && v0.z == v1.z); }
+MATHAPI vec3 vec3_add(const vec3 v0, const vec3 v1) {
+    return ((vec3) { .x = v0.x + v1.x, .y = v0.y + v1.y, .z = v0.z + v1.z } );
+}
+
+MATHAPI vec3 vec3_addf(const vec3 v0, const float f) {
+    return ((vec3) { .x = v0.x + f, .y = v0.y + f, .z = v0.z + f } );
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-MATHAPI vec3 vec3_pow(const vec3 v0, float f) { return (vec3_init(pow(v0.x, f), pow(v0.y, f), pow(v0.z, f))); }
+MATHAPI vec3 vec3_sub(const vec3 v0, const vec3 v1) {
+    return ((vec3) { .x = v0.x - v1.x, .y = v0.y - v1.y, .z = v0.z - v1.z } );
+}
 
-MATHAPI vec3 vec3_pow2(const vec3 v0) { return (vec3_init(v0.x * v0.x, v0.y * v0.y, v0.z * v0.z)); }
+MATHAPI vec3 vec3_subf(const vec3 v0, const float f) {
+    return ((vec3) { .x = v0.x - f, .y = v0.y - f, .z = v0.z - f } );
+}
 
-MATHAPI vec3 vec3_sqrt(const vec3 v0) { return (vec3_init(sqrt(v0.x), sqrt(v0.y), sqrt(v0.z))); }
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI vec3 vec3_mul(const vec3 v0, const vec3 v1) {
+    return ((vec3) { .x = v0.x * v1.x, .y = v0.y * v1.y, .z = v0.z * v1.z } );
+}
+
+MATHAPI vec3 vec3_mulf(const vec3 v0, const float f) {
+    return ((vec3) { .x = v0.x * f, .y = v0.y * f, .z = v0.z * f } );
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI vec3 vec3_div(const vec3 v0, const vec3 v1) {
+    return ((vec3) { .x = v0.x / v1.x, .y = v0.y / v1.y, .z = v0.z / v1.z } );
+}
+
+MATHAPI vec3 vec3_divf(const vec3 v0, const float f) {
+    return ((vec3) { .x = v0.x / f, .y = v0.y / f, .z = v0.z / f } );
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI bool vec3_equals(const vec3 v0, const vec3 v1) {
+    return (v0.x == v1.x && v0.y == v1.y && v0.z == v1.z);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+MATHAPI vec3 vec3_pow(const vec3 v0, float f) {
+    return ((vec3) { .x = pow(v0.x, f), .y = pow(v0.y, f), .z = pow(v0.y, f) } );
+}
+
+MATHAPI vec3 vec3_pow2(const vec3 v0) {
+    return ((vec3) { .x = v0.x * v0.x, .y = v0.y * v0.y, .z = v0.z * v0.z });
+}
+
+MATHAPI vec3 vec3_sqrt(const vec3 v0) {
+    return ((vec3) { .x = sqrt(v0.x), .y = sqrt(v0.y), .z = sqrt(v0.z) } );
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI vec3 vec3_clamp(const vec3 v0, const vec3 min, const vec3 max) {
-    return (vec3_init(clamp(v0.x, min.x, max.x), clamp(v0.y, min.y, max.y), clamp(v0.z, min.z, max.z)));
+    return ((vec3) { .x = clamp(v0.x, min.x, max.x), .y = clamp(v0.y, min.y, max.y), .z = clamp(v0.z, min.z, max.z) } );
 }
 
 MATHAPI vec3 vec3_clampf(const vec3 v0, float min, float max) {
-    return (vec3_init(clamp(v0.x, min, max), clamp(v0.y, min, max), clamp(v0.z, min, max)));
+    return ((vec3) { .x = clamp(v0.x, min, max), .y = clamp(v0.y, min, max), .z = clamp(v0.z, min, max) } );
 }
 
 MATHAPI vec3 vec3_clamp01(const vec3 v0) {
-    return (vec3_init(clamp01(v0.x), clamp01(v0.y), clamp01(v0.z)));
+    return ((vec3) { .x = clamp01(v0.x), .y = clamp01(v0.y), .z = clamp01(v0.z) } );
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI float vec3_distance(const vec3 v0, const vec3 v1) {
-    return (sqrt(pow(v0.x - v1.x, 2.0) + pow(v0.y - v1.y, 2.0) + pow(v0.z - v1.z, 2.0)));
+    return (sqrt(pow2(v0.x - v1.x) + pow2(v0.y - v1.y) + pow2(v0.z - v0.z)));
 }
 
 MATHAPI float vec3_len(const vec3 v0) {
-    return (sqrt(pow(v0.x, 2.0) + pow(v0.y, 2.0) + pow(v0.z, 2.0)));
+    return (sqrt(pow2(v0.x) + pow2(v0.y) + pow2(v0.z)));
 }
 
 MATHAPI float vec3_dot(const vec3 v0, const vec3 v1) {
@@ -257,8 +295,8 @@ MATHAPI vec3 vec3_normalize(const vec3 v0) {
     return (value);
 }
 
-MATHAPI vec3 vec3_scale(const vec3 v0, const float f0) {
-    return (vec3_mulf(v0, f0));
+MATHAPI vec3 vec3_scale(const vec3 v0, const float f) {
+    return (vec3_mulf(v0, f));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

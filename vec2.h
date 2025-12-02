@@ -258,11 +258,11 @@ MATHAPI vec2 vec2_clamp01(const vec2 v0) {
 /* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI float vec2_distance(const vec2 v0, const vec2 v1) {
-    return (sqrt(pow(v0.x - v1.x, 2.0) + pow(v0.y - v1.y, 2.0)));
+    return (sqrt(pow2(v0.x - v1.x) + pow2(v0.y - v1.y)));
 }
 
 MATHAPI float vec2_len(const vec2 v0) {
-    return (sqrt(pow(v0.x, 2.0) + pow(v0.y, 2.0)));
+    return (sqrt(pow2(v0.x) + pow2(v0.y)));
 }
 
 MATHAPI float vec2_dot(const vec2 v0, const vec2 v1) {

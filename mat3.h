@@ -17,9 +17,7 @@
 #  include <cstdio>
 #  include <cstring>
 # endif /* __cplusplus */
-# include "./common.h"
-# include "./struct.h"
-# include "./vec3.h"
+# include "./math.h"
 #
 # if defined (__cplusplus)
 
