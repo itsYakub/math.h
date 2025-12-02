@@ -159,6 +159,8 @@ static inline float _pow(const float f0, const float f1) {
     return (_exp(f1 * _logn(f0)));
 }
 
+static inline float _pow2(const float f0) { return (f0 * f0); }
+
 static inline float _sqrt(const float f0) {
     float low = min(1.0, f0);
     float high = max(1.0, f0);

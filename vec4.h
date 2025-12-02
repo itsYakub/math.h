@@ -65,7 +65,9 @@ static inline bool vec4_equals(const vec4 v0, const vec4 v1) { return (v0.x == v
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline vec4 vec4_pow(const vec4 v0, float f) { return (vec4_init(pow(v0.x, f), pow(v0.y, f), pow(v0.y, f), pow(v0.w, f))); }
+static inline vec4 vec4_pow(const vec4 v0, float f) { return (vec4_init(pow(v0.x, f), pow(v0.y, f), pow(v0.z, f), pow(v0.w, f))); }
+
+static inline vec4 vec4_pow2(const vec4 v0) { return (vec4_init(v0.x * v0.x, v0.y * v0.y, v0.z * v0.z, v0.w * v0.w)); }
 
 static inline vec4 vec4_sqrt(const vec4 v0) { return (vec4_init(sqrt(v0.x), sqrt(v0.y), sqrt(v0.z), sqrt(v0.w))); }
 
@@ -95,6 +97,19 @@ static inline float vec4_len(const vec4 v0) {
 
 static inline float vec4_dot(const vec4 v0, const vec4 v1) {
     return (v0.x * v1.x + v0.y * v1.y + v0.z * v1.z + v0.w * v1.w);
+}
+
+static inline vec4 vec4_normalize(const vec4 v0) {
+    vec4 value = vec4_zero();
+    float len = vec4_len(v0);
+    if (len > 0.0) {
+        value = vec4_mulf(v0, 1.0 / len);
+    }
+    return (value);
+}
+
+static inline vec4 vec4_scale(const vec4 v0, const float f0) {
+    return (vec4_mulf(v0, f0));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

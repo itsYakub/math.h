@@ -74,6 +74,8 @@ static inline bool vec2_equals(const vec2 v0, const vec2 v1) { return (v0.x == v
 
 static inline vec2 vec2_pow(const vec2 v0, float f) { return (vec2_init(pow(v0.x, f), pow(v0.y, f))); }
 
+static inline vec2 vec2_pow2(const vec2 v0) { return (vec2_init(v0.x * v0.x, v0.y * v0.y)); }
+
 static inline vec2 vec2_sqrt(const vec2 v0) { return (vec2_init(sqrt(v0.x), sqrt(v0.y))); }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -102,6 +104,19 @@ static inline float vec2_len(const vec2 v0) {
 
 static inline float vec2_dot(const vec2 v0, const vec2 v1) {
     return (v0.x * v1.x + v0.y * v1.y);
+}
+
+static inline vec2 vec2_normalize(const vec2 v0) {
+    vec2 value = vec2_zero();
+    float len = vec2_len(v0);
+    if (len > 0.0) {
+        value = vec2_mulf(v0, 1.0 / len);
+    }
+    return (value);
+}
+
+static inline vec2 vec2_scale(const vec2 v0, const float f0) {
+    return (vec2_mulf(v0, f0));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

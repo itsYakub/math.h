@@ -76,7 +76,9 @@ static inline bool vec3_equals(const vec3 v0, const vec3 v1) { return (v0.x == v
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline vec3 vec3_pow(const vec3 v0, float f) { return (vec3_init(pow(v0.x, f), pow(v0.y, f), pow(v0.y, f))); }
+static inline vec3 vec3_pow(const vec3 v0, float f) { return (vec3_init(pow(v0.x, f), pow(v0.y, f), pow(v0.z, f))); }
+
+static inline vec3 vec3_pow2(const vec3 v0) { return (vec3_init(v0.x * v0.x, v0.y * v0.y, v0.z * v0.z)); }
 
 static inline vec3 vec3_sqrt(const vec3 v0) { return (vec3_init(sqrt(v0.x), sqrt(v0.y), sqrt(v0.z))); }
 
