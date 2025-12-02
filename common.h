@@ -14,19 +14,7 @@
 # else
 #  include <cstddef>
 # endif /* __cplusplus */
-#
-# if !defined MATHAPI
-#  if !defined (MATH_DISABLE_STATIC_INLINE)
-#   define MATHAPI static inline
-#   define MATH_IMPLEMENTATION 1
-#  else
-#   if defined (__cplusplus)
-#    define MATHAPI extern "C"
-#   else
-#    define MATHAPI extern
-#   endif /* __cplusplus */
-#  endif /* MATH_DISABLE_STATIC_INLINE */
-# endif /* MATHAPI*/
+# include "./math.h"
 #
 # if !defined (E)
 #  define E 2.718281828459
