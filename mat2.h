@@ -18,6 +18,7 @@
 #  include <cstring>
 # endif /* __cplusplus */
 # include "./common.h"
+# include "./struct.h"
 # include "./vec2.h"
 #
 # if defined (__cplusplus)
@@ -25,22 +26,6 @@
 extern "C" {
 
 # endif /* __cplusplus */
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-typedef union u_mat2 mat2;
-union u_mat2 {
-    struct {
-        float m00, m01,
-              m10, m11;
-    };
-
-    struct {
-        vec2 m0, m1;
-    };
-};
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat2 mat2_zero(void) {
     mat2 mat = {{ 0.0, 0.0,
@@ -133,8 +118,6 @@ static inline const char *mat2_string(const mat2 m0) {
     strcat(buf, "[ "), strcat(buf, vec2_string(m0.m1)); strcat(buf, " ]\n");
     return (buf);
 }
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 # if defined (__cplusplus)
 

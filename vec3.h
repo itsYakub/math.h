@@ -18,31 +18,13 @@
 #  include <cstring>
 # endif /* __cplusplus */
 # include "./common.h"
+# include "./struct.h"
 #
 # if defined (__cplusplus)
 
 extern "C" {
 
 # endif /* __cplusplus */
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-typedef union u_vec3 vec3;
-union u_vec3 {
-    struct {
-        float x;
-        float y;
-        float z;
-    };
-    
-    struct {
-        float r;
-        float g;
-        float b;
-    };
-};
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 static inline vec3 vec3_init(const float x, const float y, const float z) { return ((vec3) { .x = x, .y = y, .z = z } ); }
 
@@ -161,8 +143,6 @@ static inline const char *vec3_string(const vec3 v0) {
     if (!snprintf(buf, sizeof(buf) - 1, "%f, %f, %f", v0.x, v0.y, v0.z)) { return (0); }
     return (buf);
 }
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 # if defined (__cplusplus)
 

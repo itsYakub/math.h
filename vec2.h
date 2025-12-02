@@ -18,30 +18,13 @@
 #  include <cstring>
 # endif /* __cplusplus */
 # include "./common.h"
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-typedef union u_vec2 vec2;
-union u_vec2 {
-    struct {
-        float x;
-        float y;
-    };
-
-    struct {
-        float w;
-        float h;
-    };
-};
-
-
+# include "./struct.h"
+#
 # if defined (__cplusplus)
 
 extern "C" {
 
 # endif /* __cplusplus */
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 static inline vec2 vec2_init(const float x, const float y) { return ((vec2) { .x = x, .y = y } ); }
 
@@ -134,8 +117,6 @@ static inline const char *vec2_string(const vec2 v0) {
     if (!snprintf(buf, sizeof(buf) - 1, "%f, %f", v0.x, v0.y)) { return (0); }
     return (buf);
 }
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 # if defined (__cplusplus)
 

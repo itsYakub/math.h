@@ -18,6 +18,7 @@
 #  include <cstring>
 # endif /* __cplusplus */
 # include "./common.h"
+# include "./struct.h"
 # include "./vec3.h"
 #
 # if defined (__cplusplus)
@@ -25,23 +26,6 @@
 extern "C" {
 
 # endif /* __cplusplus */
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-typedef union u_mat3 mat3;
-union u_mat3 {
-    struct {
-        float m00, m01, m02,
-              m10, m11, m12,
-              m20, m21, m22;
-    };
-
-    struct {
-        vec3 m0, m1, m2;
-    };
-};
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat3 mat3_zero(void) {
     mat3 mat = {{ 0.0,  0.0,  0.0,
@@ -159,8 +143,6 @@ static inline const char *mat3_string(const mat3 m0) {
     strcat(buf, "[ "), strcat(buf, vec3_string(m0.m2)); strcat(buf, " ]\n");
     return (buf);
 }
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 # if defined (__cplusplus)
 

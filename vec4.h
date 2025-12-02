@@ -18,6 +18,7 @@
 #  include <cstring>
 # endif /* __cplusplus */
 # include "./common.h"
+# include "./struct.h"
 # include "./vec2.h"
 #
 # if defined (__cplusplus)
@@ -25,32 +26,6 @@
 extern "C" {
 
 # endif /* __cplusplus */
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-typedef union u_vec4 vec4;
-union u_vec4 {
-    struct {
-        float x;
-        float y;
-        float z;
-        float w;
-    };
-    
-    struct {
-        float r;
-        float g;
-        float b;
-        float a;
-    };
-
-    struct {
-        vec2 pos;
-        vec2 siz;
-    };
-};
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 static inline vec4 vec4_init(const float x, const float y, const float z, const float w) { return ((vec4) { .x = x, .y = y, .z = z, .w = w } ); }
 
@@ -135,8 +110,6 @@ static inline const char *vec4_string(const vec4 v0) {
     if (!snprintf(buf, sizeof(buf) - 1, "%f, %f, %f, %f", v0.x, v0.y, v0.z, v0.w)) { return (0); }
     return (buf);
 }
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 # if defined (__cplusplus)
 
