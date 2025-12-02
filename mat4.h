@@ -6,8 +6,8 @@
 #if defined (__cplusplus)
 # pragma once
 #endif /* __cplusplus */
-#if !defined (_mat4_h_)
-# define _mat4_h_ 1
+#if !defined (Mat4_h_)
+# define Mat4_h_ 1
 #
 # if !defined (__cplusplus)
 #  include <stdio.h>
@@ -19,13 +19,17 @@
 # endif /* __cplusplus */
 # include "./math.h"
 #
+# if !defined (MATHAPI)
+#  define MATHAPI static inline
+# endif /* MATHAPI */
+#
 # if defined (__cplusplus)
 
 extern "C" {
 
 # endif /* __cplusplus */
 
-static inline mat4 mat4_zero(void) {
+static inline mat4 mat4Zero(void) {
     mat4 mat = {{ 0.0, 0.0, 0.0, 0.0,
                   0.0, 0.0, 0.0, 0.0,
                   0.0, 0.0, 0.0, 0.0,
@@ -34,7 +38,7 @@ static inline mat4 mat4_zero(void) {
     return (mat);
 }
 
-static inline mat4 mat4_identity(void) {
+static inline mat4 mat4Identity(void) {
     mat4 mat = {{ 1.0, 0.0, 0.0, 0.0,
                   0.0, 1.0, 0.0, 0.0,
                   0.0, 0.0, 1.0, 0.0,
@@ -43,7 +47,7 @@ static inline mat4 mat4_identity(void) {
     return (mat);
 }
 
-static inline mat4 mat4_copy(const mat4 m0) {
+static inline mat4 mat4Copy(const mat4 m0) {
     mat4 mat;
     
     for (size_t i = 0; i < sizeof(mat4); i++) {
@@ -55,33 +59,33 @@ static inline mat4 mat4_copy(const mat4 m0) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline mat4 mat4_add(const mat4 m0, const mat4 m1) {
+static inline mat4 mat4Add(const mat4 m0, const mat4 m1) {
     mat4 mat;
 
-    mat.m0 = vec4_add(m0.m0, m1.m0);
-    mat.m1 = vec4_add(m0.m1, m1.m1);
-    mat.m2 = vec4_add(m0.m2, m1.m2);
-    mat.m3 = vec4_add(m0.m3, m1.m3);
+    mat.m0 = vec4Add(m0.m0, m1.m0);
+    mat.m1 = vec4Add(m0.m1, m1.m1);
+    mat.m2 = vec4Add(m0.m2, m1.m2);
+    mat.m3 = vec4Add(m0.m3, m1.m3);
     
     return (mat);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline mat4 mat4_sub(const mat4 m0, const mat4 m1) {
+static inline mat4 mat4Sub(const mat4 m0, const mat4 m1) {
     mat4 mat;
 
-    mat.m0 = vec4_sub(m0.m0, m1.m0);
-    mat.m1 = vec4_sub(m0.m1, m1.m1);
-    mat.m2 = vec4_sub(m0.m2, m1.m2);
-    mat.m3 = vec4_sub(m0.m3, m1.m3);
+    mat.m0 = vec4Sub(m0.m0, m1.m0);
+    mat.m1 = vec4Sub(m0.m1, m1.m1);
+    mat.m2 = vec4Sub(m0.m2, m1.m2);
+    mat.m3 = vec4Sub(m0.m3, m1.m3);
     
     return (mat);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline mat4 mat4_mul(const mat4 m0, const mat4 m1) {
+static inline mat4 mat4Mul(const mat4 m0, const mat4 m1) {
     mat4 mat;
 
     mat.m00 = m0.m00 * m1.m00 + m0.m10 * m1.m01 + m0.m20 * m1.m02 + m0.m30 * m1.m03;
@@ -107,29 +111,29 @@ static inline mat4 mat4_mul(const mat4 m0, const mat4 m1) {
     return (mat);
 }
 
-static inline mat4 mat4_mulf(const mat4 m0, const float f) {
+static inline mat4 mat4Mulf(const mat4 m0, const float f) {
     mat4 mat;
 
-    mat.m0 = vec4_mulf(m0.m0, f);
-    mat.m1 = vec4_mulf(m0.m1, f);
-    mat.m2 = vec4_mulf(m0.m2, f);
-    mat.m3 = vec4_mulf(m0.m3, f);
+    mat.m0 = vec4Mulf(m0.m0, f);
+    mat.m1 = vec4Mulf(m0.m1, f);
+    mat.m2 = vec4Mulf(m0.m2, f);
+    mat.m3 = vec4Mulf(m0.m3, f);
     return (mat);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline bool mat4_equals(const mat4 m0, const mat4 m1) {
-    return (vec4_equals(m0.m0, m1.m0) &&
-            vec4_equals(m0.m1, m1.m1) &&
-            vec4_equals(m0.m2, m1.m2) &&
-            vec4_equals(m0.m3, m1.m3));
+static inline bool mat4Equals(const mat4 m0, const mat4 m1) {
+    return (vec4Equals(m0.m0, m1.m0) &&
+            vec4Equals(m0.m1, m1.m1) &&
+            vec4Equals(m0.m2, m1.m2) &&
+            vec4Equals(m0.m3, m1.m3));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 static inline mat4 mat4_ortho(const float left, const float right, const float top, const float down, const float near, const float far) {
-    mat4 mat = mat4_zero();
+    mat4 mat = mat4Zero();
     mat.m00  = 2.0 / (right - left);
     mat.m11  = 2.0 / (top   - down);
     mat.m22  = 2.0 / (far   - near);
@@ -141,7 +145,7 @@ static inline mat4 mat4_ortho(const float left, const float right, const float t
 }
 
 static inline mat4 mat4_frust(const float left, const float right, const float top, const float down, const float near, const float far) {
-    mat4 mat = mat4_zero();
+    mat4 mat = mat4Zero();
     mat.m00  = (near * 2.0) / (right - left);
     mat.m11  = (near * 2.0) / (top   - down);
     mat.m20  = (left + right) / (right - left);
@@ -152,7 +156,7 @@ static inline mat4 mat4_frust(const float left, const float right, const float t
     return (mat);
 }
 
-static inline mat4 mat4_persp(const float fieldOfView, const float aspect, const float near, const float far) {
+static inline mat4 mat4Persp(const float fieldOfView, const float aspect, const float near, const float far) {
     float top   = near * tan(fieldOfView * 0.5);
     float right = top * aspect;
     return (mat4_frust(-right, right, top, -top, near, far));
@@ -167,7 +171,7 @@ static inline mat4 mat4_translate(const vec3 v0) {
                       v0.x, v0.y, v0.z, 1.0  }} );
 }
 
-static inline mat4 mat4_scale(const vec3 v0) {
+static inline mat4 mat4Scale(const vec3 v0) {
     return ((mat4) {{ v0.x, 0.0,  0.0,  0.0,
                       0.0,  v0.y, 0.0,  0.0,
                       0.0,  0.0,  v0.z, 0.0,
@@ -179,12 +183,12 @@ static inline mat4 mat4_rotate(const vec3 axis, const float angle) {
     float s = sin(angle);
     float t = 1.0f - c;
 
-    vec3 axisn = vec3_normalize(axis);
+    vec3 axisn = vec3Normalize(axis);
     float x = axisn.x,
           y = axisn.y,
           z = axisn.z;
 
-    mat4 m = mat4_identity();
+    mat4 m = mat4Identity();
 
     m.m00 = t*x*x + c;
     m.m01 = t*y*x + s*z;
@@ -205,7 +209,7 @@ static inline mat4 mat4_rotate_x(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
 
-    mat4 value = mat4_identity();
+    mat4 value = mat4Identity();
     value.m11 = cosres;
     value.m12 = sinres;
     value.m21 = -sinres;
@@ -217,7 +221,7 @@ static inline mat4 mat4_rotate_y(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
 
-    mat4 value = mat4_identity();
+    mat4 value = mat4Identity();
     value.m00 = cosres;
     value.m02 = -sinres;
     value.m20 = sinres;
@@ -225,11 +229,11 @@ static inline mat4 mat4_rotate_y(const float angle) {
     return (value);
 }
 
-static inline mat4 mat4_rotate_z(const float angle) {
+static inline mat4 mat4_rotateZ(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
 
-    mat4 value = mat4_identity();
+    mat4 value = mat4Identity();
     value.m00 = cosres;
     value.m01 = sinres;
     value.m10 = -sinres;
@@ -242,7 +246,7 @@ static inline mat4 mat4_rotate_v(const vec3 angle) {
           siny = sin(-angle.y), cosy = cos(-angle.y),
           sinz = sin(-angle.z), cosz = cos(-angle.z);
 
-    mat4 value = mat4_identity();
+    mat4 value = mat4Identity();
     value.m00 = cosz * siny;
     value.m01 = (cosz * siny * sinx) - (sinz * cosx);
     value.m02 = (cosz * siny * cosx) - (sinz * sinx);
@@ -259,41 +263,41 @@ static inline mat4 mat4_rotate_v(const vec3 angle) {
 
 static inline mat4 mat4_lookat(const vec3 eye, const vec3 center, const vec3 up) {
     vec3 f, u, s;
-    f = vec3_sub(center, eye);
-    f = vec3_normalize(f);
+    f = vec3Sub(center, eye);
+    f = vec3Normalize(f);
 
-    s = vec3_cross(up, f);
-    s = vec3_normalize(s);
+    s = vec3Cross(up, f);
+    s = vec3Normalize(s);
 
-    u = vec3_cross(f, s);
+    u = vec3Cross(f, s);
 
-    mat4 mat = mat4_zero();
-    mat.m0 = vec4_init(s.x, u.x, f.x, 0.0);
-    mat.m1 = vec4_init(s.y, u.y, f.y, 0.0);
-    mat.m2 = vec4_init(s.z, u.z, f.z, 0.0);
-    mat.m3 = vec4_init(-vec3_dot(s, eye), -vec3_dot(u, eye), -vec3_dot(f, eye), 1.0);
+    mat4 mat = mat4Zero();
+    mat.m0 = vec4Init(s.x, u.x, f.x, 0.0);
+    mat.m1 = vec4Init(s.y, u.y, f.y, 0.0);
+    mat.m2 = vec4Init(s.z, u.z, f.z, 0.0);
+    mat.m3 = vec4Init(-vec3Dot(s, eye), -vec3Dot(u, eye), -vec3Dot(f, eye), 1.0);
     return (mat);
 }
 
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float mat4_det(const mat4 m0) {
+static inline float mat4Det(const mat4 m0) {
     float result = 0.0;
 
-    result += m0.m00 * mat3_det((mat3) {{ m0.m11, m0.m12, m0.m13,
+    result += m0.m00 * mat3Det((mat3) {{ m0.m11, m0.m12, m0.m13,
                                           m0.m21, m0.m22, m0.m23,
                                           m0.m31, m0.m32, m0.m33  }});
 
-    result -= m0.m01 * mat3_det((mat3) {{ m0.m10, m0.m12, m0.m13,
+    result -= m0.m01 * mat3Det((mat3) {{ m0.m10, m0.m12, m0.m13,
                                           m0.m20, m0.m22, m0.m23,
                                           m0.m30, m0.m32, m0.m33  }});
 
-    result += m0.m02 * mat3_det((mat3) {{ m0.m10, m0.m11, m0.m13,
+    result += m0.m02 * mat3Det((mat3) {{ m0.m10, m0.m11, m0.m13,
                                           m0.m20, m0.m21, m0.m23,
                                           m0.m30, m0.m31, m0.m33  }});
 
-    result -= m0.m03 * mat3_det((mat3) {{ m0.m10, m0.m11, m0.m12,
+    result -= m0.m03 * mat3Det((mat3) {{ m0.m10, m0.m11, m0.m12,
                                           m0.m20, m0.m21, m0.m22,
                                           m0.m30, m0.m31, m0.m32  }});
 
@@ -302,18 +306,18 @@ static inline float mat4_det(const mat4 m0) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline const float *mat4_ptr(const mat4 *m0) { return (&m0->m00); }
+static inline const float *mat4Ptr(const mat4 *m0) { return (&m0->m00); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline const char *mat4_string(const mat4 m0) {
+static inline const char *mat4String(const mat4 m0) {
     static char buf[1024];
 
     if (!memset(buf, 0, sizeof(buf))) { return (0); }
-    strcat(buf, "[ "), strcat(buf, vec4_string(m0.m0)); strcat(buf, " ]\n");
-    strcat(buf, "[ "), strcat(buf, vec4_string(m0.m1)); strcat(buf, " ]\n");
-    strcat(buf, "[ "), strcat(buf, vec4_string(m0.m2)); strcat(buf, " ]\n");
-    strcat(buf, "[ "), strcat(buf, vec4_string(m0.m3)); strcat(buf, " ]");
+    strcat(buf, "[ "), strcat(buf, vec4String(m0.m0)); strcat(buf, " ]\n");
+    strcat(buf, "[ "), strcat(buf, vec4String(m0.m1)); strcat(buf, " ]\n");
+    strcat(buf, "[ "), strcat(buf, vec4String(m0.m2)); strcat(buf, " ]\n");
+    strcat(buf, "[ "), strcat(buf, vec4String(m0.m3)); strcat(buf, " ]");
     return (buf);
 }
 
@@ -326,23 +330,23 @@ static inline const char *mat4_string(const mat4 m0) {
 # if defined (__cplusplus)
 #  if !defined (MATH_DISABLE_CPP_OPERATORS)
 
-static inline mat4 operator + (const mat4 &v0, const mat4 &v1) { return (mat4_add(v0, v1)); }
+static inline mat4 operator + (const mat4 &v0, const mat4 &v1) { return (mat4Add(v0, v1)); }
 
-const static inline mat4& operator += (mat4 &v0, const mat4 &v1) { return ((v0 = mat4_add(v0, v1))); }
+const static inline mat4& operator += (mat4 &v0, const mat4 &v1) { return ((v0 = mat4Add(v0, v1))); }
 
-static inline mat4 operator - (const mat4 &v0, const mat4 &v1)   { return (mat4_sub(v0, v1)); }
+static inline mat4 operator - (const mat4 &v0, const mat4 &v1)   { return (mat4Sub(v0, v1)); }
 
-const static inline mat4& operator -= (mat4 &v0, const mat4 &v1) { return ((v0 = mat4_sub(v0, v1))); }
+const static inline mat4& operator -= (mat4 &v0, const mat4 &v1) { return ((v0 = mat4Sub(v0, v1))); }
 
-static inline mat4 operator * (const mat4 &v0, const mat4 &v1)   { return (mat4_mul(v0, v1)); }
+static inline mat4 operator * (const mat4 &v0, const mat4 &v1)   { return (mat4Mul(v0, v1)); }
 
-const static inline mat4& operator *= (mat4 &v0, const mat4 &v1) { return ((v0 = mat4_mul(v0, v1))); }
+const static inline mat4& operator *= (mat4 &v0, const mat4 &v1) { return ((v0 = mat4Mul(v0, v1))); }
 
-static inline bool operator == (const mat4 &v0, const mat4 &v1) { return (mat4_equals(v0, v1)); }
+static inline bool operator == (const mat4 &v0, const mat4 &v1) { return (mat4Equals(v0, v1)); }
 
-static inline bool operator != (const mat4 &v0, const mat4 &v1) { return (!mat4_equals(v0, v1)); }
+static inline bool operator != (const mat4 &v0, const mat4 &v1) { return (!mat4Equals(v0, v1)); }
 
 #  endif /* MATH_DISABLE_CPP_OPERATORS */
 # endif /* __cplusplus */
 #
-#endif /* _mat4_h_ */
+#endif /* Mat4_h_ */

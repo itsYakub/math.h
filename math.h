@@ -9,25 +9,9 @@
 #if !defined (_math_h_)
 # define _math_h_ 1
 #
-#
-# if !defined (MATH_STATIC_INLINE) && !defined (MATH_EXTERN)
-#  define MATH_EXTERN 1
-# endif /* MATH_STATIC_INLINE, MATH_EXTERN */
-#
-#
-# if defined (MATH_STATIC_INLINE)
+# if !defined (MATHAPI)
 #  define MATHAPI static inline
-#  define MATH_IMPLEMENTATION 1
-# endif /* MATH_STATIC_INLINE */
-#
-# if defined (MATH_EXTERN)
-#  if defined (__cplusplus)
-#   define MATHAPI extern "C"
-#  else
-#   define MATHAPI extern
-#  endif /* __cplusplus */
-# endif /* MATH_EXTERN */
-#
+# endif /* MATHAPI */
 #
 # include "./common.h"
 # include "./struct.h"

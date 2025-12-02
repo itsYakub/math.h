@@ -6,8 +6,8 @@
 #if defined (__cplusplus)
 # pragma once
 #endif /* __cplusplus */
-#if !defined (_mat2_h_)
-# define _mat2_h_ 1
+#if !defined (Mat2_h_)
+# define Mat2_h_ 1
 #
 # if !defined (__cplusplus)
 #  include <stdio.h>
@@ -19,27 +19,31 @@
 # endif /* __cplusplus */
 # include "./math.h"
 #
+# if !defined (MATHAPI)
+#  define MATHAPI static inline
+# endif /* MATHAPI */
+#
 # if defined (__cplusplus)
 
 extern "C" {
 
 # endif /* __cplusplus */
 
-static inline mat2 mat2_zero(void) {
+static inline mat2 mat2Zero(void) {
     mat2 mat = {{ 0.0, 0.0,
                   0.0, 0.0  }};
 
     return (mat);
 }
 
-static inline mat2 mat2_identity(void) {
+static inline mat2 mat2Identity(void) {
     mat2 mat = {{ 1.0, 0.0,
                   0.0, 1.0  }};
 
     return (mat);
 }
 
-static inline mat2 mat2_copy(const mat2 m0) {
+static inline mat2 mat2Copy(const mat2 m0) {
     mat2 mat;
     
     for (size_t i = 0; i < sizeof(mat2); i++) {
@@ -51,27 +55,27 @@ static inline mat2 mat2_copy(const mat2 m0) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline mat2 mat2_add(const mat2 m0, const mat2 m1) {
+static inline mat2 mat2Add(const mat2 m0, const mat2 m1) {
     mat2 mat;
 
-    mat.m0 = vec2_add(m0.m0, m1.m0);
-    mat.m1 = vec2_add(m0.m1, m1.m1);
+    mat.m0 = vec2Add(m0.m0, m1.m0);
+    mat.m1 = vec2Add(m0.m1, m1.m1);
     return (mat);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline mat2 mat2_sub(const mat2 m0, const mat2 m1) {
+static inline mat2 mat2Sub(const mat2 m0, const mat2 m1) {
     mat2 mat;
 
-    mat.m0 = vec2_sub(m0.m0, m1.m0);
-    mat.m1 = vec2_sub(m0.m1, m1.m1);
+    mat.m0 = vec2Sub(m0.m0, m1.m0);
+    mat.m1 = vec2Sub(m0.m1, m1.m1);
     return (mat);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline mat2 mat2_mul(const mat2 m0, const mat2 m1) {
+static inline mat2 mat2Mul(const mat2 m0, const mat2 m1) {
     mat2 mat;
 
     mat.m00 = m0.m00 * m1.m00 + m0.m10 * m1.m01;
@@ -83,37 +87,37 @@ static inline mat2 mat2_mul(const mat2 m0, const mat2 m1) {
     return (mat);
 }
 
-static inline mat2 mat2_mulf(const mat2 m0, const float f) {
+static inline mat2 mat2Mulf(const mat2 m0, const float f) {
     mat2 mat;
 
-    mat.m0 = vec2_mulf(m0.m0, f);
-    mat.m1 = vec2_mulf(m0.m1, f);
+    mat.m0 = vec2Mulf(m0.m0, f);
+    mat.m1 = vec2Mulf(m0.m1, f);
     return (mat);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline bool mat2_equals(const mat2 m0, const mat2 m1) {
-    return (vec2_equals(m0.m0, m1.m0) &&
-            vec2_equals(m0.m1, m1.m1));
+static inline bool mat2Equals(const mat2 m0, const mat2 m1) {
+    return (vec2Equals(m0.m0, m1.m0) &&
+            vec2Equals(m0.m1, m1.m1));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float mat2_det(const mat2 m0) { return (m0.m00 * m0.m11 - m0.m10 * m0.m01); }
+static inline float mat2Det(const mat2 m0) { return (m0.m00 * m0.m11 - m0.m10 * m0.m01); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline const float *mat2_ptr(const mat2 *m0) { return (&m0->m00); }
+static inline const float *mat2Ptr(const mat2 *m0) { return (&m0->m00); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline const char *mat2_string(const mat2 m0) {
+static inline const char *mat2String(const mat2 m0) {
     static char buf[1024];
 
     if (!memset(buf, 0, sizeof(buf))) { return (0); }
-    strcat(buf, "[ "), strcat(buf, vec2_string(m0.m0)); strcat(buf, " ]\n");
-    strcat(buf, "[ "), strcat(buf, vec2_string(m0.m1)); strcat(buf, " ]\n");
+    strcat(buf, "[ "), strcat(buf, vec2String(m0.m0)); strcat(buf, " ]\n");
+    strcat(buf, "[ "), strcat(buf, vec2String(m0.m1)); strcat(buf, " ]\n");
     return (buf);
 }
 
@@ -126,23 +130,23 @@ static inline const char *mat2_string(const mat2 m0) {
 # if defined (__cplusplus)
 #  if !defined (MATH_DISABLE_CPP_OPERATORS)
 
-static inline mat2 operator + (const mat2 &v0, const mat2 &v1) { return (mat2_add(v0, v1)); }
+static inline mat2 operator + (const mat2 &v0, const mat2 &v1) { return (mat2Add(v0, v1)); }
 
-const static inline mat2& operator += (mat2 &v0, const mat2 &v1) { return ((v0 = mat2_add(v0, v1))); }
+const static inline mat2& operator += (mat2 &v0, const mat2 &v1) { return ((v0 = mat2Add(v0, v1))); }
 
-static inline mat2 operator - (const mat2 &v0, const mat2 &v1)   { return (mat2_sub(v0, v1)); }
+static inline mat2 operator - (const mat2 &v0, const mat2 &v1)   { return (mat2Sub(v0, v1)); }
 
-const static inline mat2& operator -= (mat2 &v0, const mat2 &v1) { return ((v0 = mat2_sub(v0, v1))); }
+const static inline mat2& operator -= (mat2 &v0, const mat2 &v1) { return ((v0 = mat2Sub(v0, v1))); }
 
-static inline mat2 operator * (const mat2 &v0, const mat2 &v1)   { return (mat2_mul(v0, v1)); }
+static inline mat2 operator * (const mat2 &v0, const mat2 &v1)   { return (mat2Mul(v0, v1)); }
 
-const static inline mat2& operator *= (mat2 &v0, const mat2 &v1) { return ((v0 = mat2_mul(v0, v1))); }
+const static inline mat2& operator *= (mat2 &v0, const mat2 &v1) { return ((v0 = mat2Mul(v0, v1))); }
 
-static inline bool operator == (const mat2 &v0, const mat2 &v1) { return (mat2_equals(v0, v1)); }
+static inline bool operator == (const mat2 &v0, const mat2 &v1) { return (mat2Equals(v0, v1)); }
 
-static inline bool operator != (const mat2 &v0, const mat2 &v1) { return (!mat2_equals(v0, v1)); }
+static inline bool operator != (const mat2 &v0, const mat2 &v1) { return (!mat2Equals(v0, v1)); }
 
 #  endif /* MATH_DISABLE_CPP_OPERATORS */
 # endif /* __cplusplus */
 #
-#endif /* _mat2_h_ */
+#endif /* Mat2_h_ */
