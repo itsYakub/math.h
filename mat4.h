@@ -132,7 +132,7 @@ MATHAPI bool mat4Equals(const mat4 m0, const mat4 m1) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-MATHAPI mat4 mat4_ortho(const float left, const float right, const float top, const float down, const float near, const float far) {
+MATHAPI mat4 mat4Orthographic(const float left, const float right, const float top, const float down, const float near, const float far) {
     mat4 mat = mat4Zero();
     mat.m00  = 2.0 / (right - left);
     mat.m11  = 2.0 / (top   - down);
@@ -144,7 +144,7 @@ MATHAPI mat4 mat4_ortho(const float left, const float right, const float top, co
     return (mat);
 }
 
-MATHAPI mat4 mat4_frust(const float left, const float right, const float top, const float down, const float near, const float far) {
+MATHAPI mat4 mat4Frustum(const float left, const float right, const float top, const float down, const float near, const float far) {
     mat4 mat = mat4Zero();
     mat.m00  = (near * 2.0) / (right - left);
     mat.m11  = (near * 2.0) / (top   - down);
@@ -156,15 +156,15 @@ MATHAPI mat4 mat4_frust(const float left, const float right, const float top, co
     return (mat);
 }
 
-MATHAPI mat4 mat4Persp(const float fieldOfView, const float aspect, const float near, const float far) {
+MATHAPI mat4 mat4Perspective(const float fieldOfView, const float aspect, const float near, const float far) {
     float top   = near * tan(fieldOfView * 0.5);
     float right = top * aspect;
-    return (mat4_frust(-right, right, top, -top, near, far));
+    return (mat4Frustum(-right, right, top, -top, near, far));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-MATHAPI mat4 mat4_translate(const vec3 v0) {
+MATHAPI mat4 mat4Translate(const vec3 v0) {
     return ((mat4) {{ 1.0,  0.0,  0.0,  0.0,
                       0.0,  1.0,  0.0,  0.0,
                       0.0,  0.0,  1.0,  0.0,
@@ -178,7 +178,7 @@ MATHAPI mat4 mat4Scale(const vec3 v0) {
                       0.0,  0.0,  0.0,  1.0  }} );
 }
 
-MATHAPI mat4 mat4_rotate(const vec3 axis, const float angle) {
+MATHAPI mat4 mat4Rotate(const vec3 axis, const float angle) {
     float c = cos(angle);
     float s = sin(angle);
     float t = 1.0f - c;
@@ -205,7 +205,7 @@ MATHAPI mat4 mat4_rotate(const vec3 axis, const float angle) {
     return (m);
 }
 
-MATHAPI mat4 mat4_rotate_x(const float angle) {
+MATHAPI mat4 mat4RotateX(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
 
@@ -217,7 +217,7 @@ MATHAPI mat4 mat4_rotate_x(const float angle) {
     return (value);
 }
 
-MATHAPI mat4 mat4_rotate_y(const float angle) {
+MATHAPI mat4 mat4RotateY(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
 
@@ -229,7 +229,7 @@ MATHAPI mat4 mat4_rotate_y(const float angle) {
     return (value);
 }
 
-MATHAPI mat4 mat4_rotateZ(const float angle) {
+MATHAPI mat4 mat4RotateZ(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
 
@@ -241,7 +241,7 @@ MATHAPI mat4 mat4_rotateZ(const float angle) {
     return (value);
 }
 
-MATHAPI mat4 mat4_rotate_v(const vec3 angle) {
+MATHAPI mat4 mat4RotateV(const vec3 angle) {
     float sinx = sin(-angle.x), cosx = cos(-angle.x),
           siny = sin(-angle.y), cosy = cos(-angle.y),
           sinz = sin(-angle.z), cosz = cos(-angle.z);
@@ -261,7 +261,7 @@ MATHAPI mat4 mat4_rotate_v(const vec3 angle) {
     return (value);
 }
 
-MATHAPI mat4 mat4_lookat(const vec3 eye, const vec3 center, const vec3 up) {
+MATHAPI mat4 mat4LookAt(const vec3 eye, const vec3 center, const vec3 up) {
     vec3 f, u, s;
     f = vec3Sub(center, eye);
     f = vec3Normalize(f);
