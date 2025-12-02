@@ -16,6 +16,10 @@
 # endif /* __cplusplus */
 # include "./common.h"
 #
+# if !defined (MATHAPI)
+#  define MATHAPI static inline
+# endif /* MATHAPI */
+#
 # if defined (__cplusplus)
 
 extern "C" {
@@ -24,11 +28,11 @@ extern "C" {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float _lerp(const float f0, const float f1, const float t0) { return (f1 - f0) * t0 + f0; }
+MATHAPI float _lerp(const float f0, const float f1, const float t0) { return (f1 - f0) * t0 + f0; }
 
 /* NOTE: this function is using approximation and some results may be incorrect.
  * */
-static inline float _slerp(const float f0, const float f1, const float t0) {
+MATHAPI float _slerp(const float f0, const float f1, const float t0) {
     const float f2 = acos(clamp01(f0 * f1));
 
     if (f2 < EPSILON) {

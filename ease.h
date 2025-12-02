@@ -24,23 +24,23 @@ extern "C" {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float easeOutSine(const float t) { return (sin((clamp01(t) * PI) / 2.0)); }
+MATHAPI float easeOutSine(const float t) { return (sin((clamp01(t) * PI) / 2.0)); }
 
-static inline float easeOutQuad(const float t) {
+MATHAPI float easeOutQuad(const float t) {
     const float t1 = clamp01(t);
     return (1.0 - (1.0 - t1) * (1.0 - t1));
 }
 
-static inline float easeOutCubic(const float t) { return (1.0 - pow(1.0 - clamp01(t), 3)); }
+MATHAPI float easeOutCubic(const float t) { return (1.0 - pow(1.0 - clamp01(t), 3)); }
 
-static inline float easeOutBack(const float t) {
+MATHAPI float easeOutBack(const float t) {
     const float c1 = 1.70158;
     const float c3 = c1 + 1;
     const float t1 = clamp01(t);
     return (1.0 + c3 * pow(t1 - 1.0, 3) + c1 * pow(t1 - 1.0, 2));
 }
 
-static inline float easeOutElastic(const float t) {
+MATHAPI float easeOutElastic(const float t) {
     const float c4 = (2.0 * PI) / 3.0;
     const float t1 = clamp01(t);
     return (t == 0.0
@@ -52,7 +52,7 @@ static inline float easeOutElastic(const float t) {
             );
 }
 
-static inline float easeOutBounce(const float t) {
+MATHAPI float easeOutBounce(const float t) {
           float t1 = clamp01(t);
     const float t2 = 7.5625;
     const float t3 = 2.75;
@@ -73,20 +73,20 @@ static inline float easeOutBounce(const float t) {
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static inline float easeInSine(const float t) { return (1.0 - cos((clamp01(t) * PI) / 2.0)); }
+MATHAPI float easeInSine(const float t) { return (1.0 - cos((clamp01(t) * PI) / 2.0)); }
 
-static inline float easeInQuad(const float t) { return (pow(clamp01(t), 2)); }
+MATHAPI float easeInQuad(const float t) { return (pow(clamp01(t), 2)); }
 
-static inline float easeInCubic(const float t) { return (pow(clamp01(t), 3)); }
+MATHAPI float easeInCubic(const float t) { return (pow(clamp01(t), 3)); }
 
-static inline float easeInBack(const float t) {
+MATHAPI float easeInBack(const float t) {
     const float c1 = 1.70158;
     const float c3 = c1 + 1;
     const float t1 = clamp01(t);
     return (c3 * pow(t1, 3) - c1 * pow(t1, 2));
 }
 
-static inline float easeInElastic(const float t) {
+MATHAPI float easeInElastic(const float t) {
     const float c4 = (2.0 * PI) / 3.0;
     const float t1 = clamp01(t);
     return (t == 0.0
@@ -98,7 +98,7 @@ static inline float easeInElastic(const float t) {
             );
 }
 
-static inline float easeInBounce(const float t) { return (1.0 - easeOutBounce(1.0 - clamp01(t))); }
+MATHAPI float easeInBounce(const float t) { return (1.0 - easeOutBounce(1.0 - clamp01(t))); }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
