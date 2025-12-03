@@ -23,6 +23,7 @@ union u_vec2 {
 };
 
 typedef union u_vec3 vec3;
+typedef union u_vec3 col3;
 union u_vec3 {
     struct {
         float x;
@@ -38,6 +39,8 @@ union u_vec3 {
 };
 
 typedef union u_vec4 vec4;
+typedef union u_vec4 col4;
+typedef union u_vec4 rect;
 union u_vec4 {
     struct {
         float x;
