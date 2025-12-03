@@ -179,6 +179,10 @@ MATHAPI vec3 vec3Scale(const vec3 v0, const float f) {
     return (vec3Mulf(v0, f));
 }
 
+MATHAPI vec3 vec3Negate(const vec3 v0) {
+    return ((vec3) { .x = -v0.x, .y = -v0.y, .z = -v0.z } );
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI const float *vec3Ptr(const vec3 *v0) { return (&v0->x); }

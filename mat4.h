@@ -261,6 +261,15 @@ MATHAPI mat4 mat4RotateV(const vec3 angle) {
     return (value);
 }
 
+MATHAPI mat4 mat4RotateAt(const vec3 pivot, const vec3 axis, const float angle) {
+    mat4 value = mat4Identity();
+         value = mat4Mul(value, mat4Translate(pivot)),
+         value = mat4Mul(value, mat4Rotate(axis, angle)),
+         value = mat4Mul(value, vec3Negate(pivot));
+
+    return (value);
+}
+
 MATHAPI mat4 mat4LookAt(const vec3 eye, const vec3 center, const vec3 up) {
     vec3 f, u, s;
     f = vec3Sub(center, eye);
