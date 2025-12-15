@@ -80,7 +80,7 @@ MATHAPI float _max(const float, const float);
 MATHAPI float _exp(const float);
 
 
-MATHAPI float _logn(const float);
+MATHAPI float _ln(const float);
 
 
 MATHAPI float _log(const float, const float);
@@ -352,7 +352,7 @@ MATHAPI float _pow(const float f0, const float f1) {
         return (value);
     }
 
-    return (_exp(f1 * _logn(f0)));
+    return (_exp(f1 * _ln(f0)));
 }
 
 

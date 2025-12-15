@@ -15,6 +15,7 @@
 # if !defined (MATHAPI)
 #  if defined (MATHAPI_STATIC)
 #   define MATHAPI static inline
+#   define MATHAPI_IMPLEMENTATION 1
 #  endif /* MATHAPI_STATIC */
 #  if defined (MATHAPI_EXTERN)
 #   define MATHAPI extern

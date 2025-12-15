@@ -15,18 +15,12 @@
 # if !defined (MATHAPI)
 #  if defined (MATHAPI_STATIC)
 #   define MATHAPI static inline
+#   define MATHAPI_IMPLEMENTATION 1
 #  endif /* MATHAPI_STATIC */
 #  if defined (MATHAPI_EXTERN)
 #   define MATHAPI extern
 #  endif /* MATHAPI_EXTERN */
 # endif /* MATHAPI */
-#
-# if !defined (__cplusplus)
-#  include <stddef.h>
-# else
-#  include <cstddef>
-# endif /* __cplusplus */
-# include "./common.h"
 #
 # if defined (__cplusplus)
 
@@ -34,9 +28,38 @@ extern "C" {
 
 # endif /* __cplusplus */
 
-/* ---------------------------------------------------------------------------------------------------- */
+MATHAPI float _lerp(const float, const float, const float);
 
-MATHAPI float _lerp(const float f0, const float f1, const float t0) { return (f1 - f0) * t0 + f0; }
+/* NOTE: this function is using approximation and some results may be incorrect.
+ * */
+MATHAPI float _slerp(const float, const float, const float);
+
+# if !defined (lerp)
+#  define lerp(a, b, t)  _lerp(a, b, t)
+# endif /* lerp */
+# if !defined (slerp)
+#  define slerp(a, b, t) _slerp(a, b, t)
+# endif /* slerp */
+#
+# if defined (__cplusplus)
+
+}
+
+# endif /* __cplusplus */
+#
+# if defined (MATHAPI_IMPLEMENTATION)
+#
+#  include "./common.h"
+#
+#  if defined (__cplusplus)
+
+extern "C" {
+
+#  endif /* __cplusplus */
+
+MATHAPI float _lerp(const float f0, const float f1, const float t0) {
+    return (f1 - f0) * t0 + f0;
+}
 
 /* NOTE: this function is using approximation and some results may be incorrect.
  * */
@@ -49,18 +72,10 @@ MATHAPI float _slerp(const float f0, const float f1, const float t0) {
     return ((sin((1.0 - t0) * f2) + (sin(t0 * f2) * f1)) / sin(f2));
 } 
 
-# if !defined (lerp)
-#  define lerp(a, b, t)     _lerp(a, b, t)
-# endif /* lerp */
-# if !defined (slerp)
-#  define slerp(a, b, t)    _slerp(a, b, t)
-# endif /* slerp */
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-# if defined (__cplusplus)
+#  if defined (__cplusplus)
 
 }
 
-# endif /* __cplusplus */
+#  endif /* __cplusplus */
+# endif /* MATHAPI_IMPLEMENTATION */
 #endif /* _lerp_h_ */
