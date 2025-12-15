@@ -516,6 +516,6 @@ MATHAPI double _atod(const char *str) {
 
 # undef isspace
 # undef isdigit
-
+#
 # endif /* MATHAPI_IMPLEMENTATION */
 #endif /* _common_h_ */
