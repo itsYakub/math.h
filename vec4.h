@@ -264,7 +264,7 @@ MATHAPI float vec4Dot(const vec4 v0, const vec4 v1) {
 
 MATHAPI vec4 vec4Normalize(const vec4 v0) {
     vec4 value = vec4Zero();
-    float len = vec4Length(v0);
+    float len  = vec4Length(v0);
     if (len > 0.0) {
         value = vec4Mulf(v0, 1.0 / len);
     }
@@ -272,7 +272,7 @@ MATHAPI vec4 vec4Normalize(const vec4 v0) {
 }
 
 
-MATHAPI vec4 vec4Scale(const vec4 v0, const float f0) {
+MATHAPI vec4 vec4Scale(const vec4 v0, const float f) {
     return (vec4Mulf(v0, f0));
 }
 

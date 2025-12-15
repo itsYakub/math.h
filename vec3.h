@@ -328,7 +328,7 @@ MATHAPI vec3 vec3Cross(const vec3 v0, const vec3 v1) {
 
 MATHAPI vec3 vec3Normalize(const vec3 v0) {
     vec3 value = vec3Zero();
-    float len = vec3Length(v0);
+    float len  = vec3Length(v0);
     if (len > 0.0) {
         value = vec3Mulf(v0, 1.0 / len);
     }

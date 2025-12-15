@@ -349,10 +349,10 @@ MATHAPI mat4 mat4RotateX(const float angle) {
           cosres = cos(angle);
 
     mat4 value = mat4Identity();
-    value.m11 = cosres;
-    value.m12 = sinres;
-    value.m21 = -sinres;
-    value.m22 = cosres;
+    value.m11  = cosres;
+    value.m12  = sinres;
+    value.m21  = -sinres;
+    value.m22  = cosres;
     return (value);
 }
 
@@ -361,10 +361,10 @@ MATHAPI mat4 mat4RotateY(const float angle) {
           cosres = cos(angle);
 
     mat4 value = mat4Identity();
-    value.m00 = cosres;
-    value.m02 = -sinres;
-    value.m20 = sinres;
-    value.m22 = cosres;
+    value.m00  = cosres;
+    value.m02  = -sinres;
+    value.m20  = sinres;
+    value.m22  = cosres;
     return (value);
 }
 
@@ -373,10 +373,10 @@ MATHAPI mat4 mat4RotateZ(const float angle) {
           cosres = cos(angle);
 
     mat4 value = mat4Identity();
-    value.m00 = cosres;
-    value.m01 = sinres;
-    value.m10 = -sinres;
-    value.m11 = cosres;
+    value.m00  = cosres;
+    value.m01  = sinres;
+    value.m10  = -sinres;
+    value.m11  = cosres;
     return (value);
 }
 
@@ -386,17 +386,17 @@ MATHAPI mat4 mat4RotateV(const vec3 angle) {
           sinz = sin(-angle.z), cosz = cos(-angle.z);
 
     mat4 value = mat4Identity();
-    value.m00 = cosz * siny;
-    value.m01 = (cosz * siny * sinx) - (sinz * cosx);
-    value.m02 = (cosz * siny * cosx) - (sinz * sinx);
+    value.m00  = cosz * siny;
+    value.m01  = (cosz * siny * sinx) - (sinz * cosx);
+    value.m02  = (cosz * siny * cosx) - (sinz * sinx);
     
-    value.m10 = sinz * cosy;
-    value.m11 = (sinz * siny * sinx) - (cosz * cosx);
-    value.m12 = (sinz * siny * cosx) - (cosz * sinx);
+    value.m10  = sinz * cosy;
+    value.m11  = (sinz * siny * sinx) - (cosz * cosx);
+    value.m12  = (sinz * siny * cosx) - (cosz * sinx);
     
-    value.m20 = -siny;
-    value.m21 = cosz * sinx;
-    value.m22 = cosy * cosx;
+    value.m20  = -siny;
+    value.m21  = cosz * sinx;
+    value.m22  = cosy * cosx;
     return (value);
 }
 
@@ -419,10 +419,10 @@ MATHAPI mat4 mat4LookAt(const vec3 eye, const vec3 center, const vec3 up) {
     u = vec3Cross(f, s);
 
     mat4 mat = mat4Zero();
-    mat.m0 = vec4Init(s.x, u.x, f.x, 0.0);
-    mat.m1 = vec4Init(s.y, u.y, f.y, 0.0);
-    mat.m2 = vec4Init(s.z, u.z, f.z, 0.0);
-    mat.m3 = vec4Init(-vec3Dot(s, eye), -vec3Dot(u, eye), -vec3Dot(f, eye), 1.0);
+    mat.m0   = vec4Init(s.x, u.x, f.x, 0.0);
+    mat.m1   = vec4Init(s.y, u.y, f.y, 0.0);
+    mat.m2   = vec4Init(s.z, u.z, f.z, 0.0);
+    mat.m3   = vec4Init(-vec3Dot(s, eye), -vec3Dot(u, eye), -vec3Dot(f, eye), 1.0);
     return (mat);
 }
 
@@ -456,7 +456,7 @@ MATHAPI float mat4Det(const mat4 m0) {
 #
 #  if defined (__cplusplus)
 #   if !defined (MATH_DISABLE_CPP_OPERATORS)
-MATHAPI mat4 operator + (const mat4 &v0, const mat4 &v1) { return (mat4Add(v0, v1)); }
+MATHAPI mat4 operator + (const mat4 &v0, const mat4 &v1)   { return (mat4Add(v0, v1)); }
 
 MATHAPI const mat4& operator += (mat4 &v0, const mat4 &v1) { return ((v0 = mat4Add(v0, v1))); }
 
@@ -468,7 +468,7 @@ MATHAPI mat4 operator * (const mat4 &v0, const mat4 &v1)   { return (mat4Mul(v0,
 
 MATHAPI const mat4& operator *= (mat4 &v0, const mat4 &v1) { return ((v0 = mat4Mul(v0, v1))); }
 
-MATHAPI bool operator == (const mat4 &v0, const mat4 &v1) { return (mat4Equals(v0, v1)); }
+MATHAPI bool operator == (const mat4 &v0, const mat4 &v1)  { return (mat4Equals(v0, v1)); }
 
 #   endif /* MATH_DISABLE_CPP_OPERATORS */
 #  endif /* __cplusplus */

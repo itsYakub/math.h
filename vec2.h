@@ -303,7 +303,7 @@ MATHAPI float vec2Dot(const vec2 v0, const vec2 v1) {
 
 MATHAPI vec2 vec2Normalize(const vec2 v0) {
     vec2 value = vec2Zero();
-    float len = vec2Length(v0);
+    float len  = vec2Length(v0);
     if (len > 0.0) {
         value = vec2Mulf(v0, 1.0 / len);
     }
