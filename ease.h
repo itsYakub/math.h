@@ -9,6 +9,18 @@
 #if !defined (_ease_h_)
 # define _ease_h_ 1
 #
+# if !defined (MATHAPI_STATIC) && !defined (MATHAPI_EXTERN)
+#  define MATHAPI_EXTERN 1
+# endif /* MATHAPI_STATIC, MATHAPI_EXTERN */
+# if !defined (MATHAPI)
+#  if defined (MATHAPI_STATIC)
+#   define MATHAPI static inline
+#  endif /* MATHAPI_STATIC */
+#  if defined (MATHAPI_EXTERN)
+#   define MATHAPI extern
+#  endif /* MATHAPI_EXTERN */
+# endif /* MATHAPI */
+#
 # if !defined (__cplusplus)
 #  include <stddef.h>
 # else

@@ -9,6 +9,18 @@
 #if !defined (_mat4_h_)
 # define _mat4_h_ 1
 #
+# if !defined (MATHAPI_STATIC) && !defined (MATHAPI_EXTERN)
+#  define MATHAPI_EXTERN 1
+# endif /* MATHAPI_STATIC, MATHAPI_EXTERN */
+# if !defined (MATHAPI)
+#  if defined (MATHAPI_STATIC)
+#   define MATHAPI static inline
+#  endif /* MATHAPI_STATIC */
+#  if defined (MATHAPI_EXTERN)
+#   define MATHAPI extern
+#  endif /* MATHAPI_EXTERN */
+# endif /* MATHAPI */
+#
 # if !defined (__cplusplus)
 #  include <stdio.h>
 #  include <string.h>
@@ -18,10 +30,6 @@
 #  include <cstring>
 # endif /* __cplusplus */
 # include "./math.h"
-#
-# if !defined (MATHAPI)
-#  define MATHAPI static inline
-# endif /* MATHAPI */
 #
 # if defined (__cplusplus)
 
@@ -47,6 +55,7 @@ MATHAPI mat4 mat4Identity(void) {
     return (mat);
 }
 
+
 MATHAPI mat4 mat4Copy(const mat4 m0) {
     mat4 mat;
     
@@ -57,7 +66,6 @@ MATHAPI mat4 mat4Copy(const mat4 m0) {
     return (mat);
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI mat4 mat4Add(const mat4 m0, const mat4 m1) {
     mat4 mat;
@@ -70,7 +78,6 @@ MATHAPI mat4 mat4Add(const mat4 m0, const mat4 m1) {
     return (mat);
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI mat4 mat4Sub(const mat4 m0, const mat4 m1) {
     mat4 mat;
@@ -83,7 +90,6 @@ MATHAPI mat4 mat4Sub(const mat4 m0, const mat4 m1) {
     return (mat);
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI mat4 mat4Mul(const mat4 m0, const mat4 m1) {
     mat4 mat;
@@ -111,6 +117,7 @@ MATHAPI mat4 mat4Mul(const mat4 m0, const mat4 m1) {
     return (mat);
 }
 
+
 MATHAPI mat4 mat4Mulf(const mat4 m0, const float f) {
     mat4 mat;
 
@@ -121,7 +128,6 @@ MATHAPI mat4 mat4Mulf(const mat4 m0, const float f) {
     return (mat);
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI bool mat4Equals(const mat4 m0, const mat4 m1) {
     return (vec4Equals(m0.m0, m1.m0) &&
@@ -130,7 +136,6 @@ MATHAPI bool mat4Equals(const mat4 m0, const mat4 m1) {
             vec4Equals(m0.m3, m1.m3));
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI mat4 mat4Orthographic(const float left, const float right, const float top, const float down, const float near, const float far) {
     mat4 mat = mat4Zero();
@@ -144,6 +149,7 @@ MATHAPI mat4 mat4Orthographic(const float left, const float right, const float t
     return (mat);
 }
 
+
 MATHAPI mat4 mat4Frustum(const float left, const float right, const float top, const float down, const float near, const float far) {
     mat4 mat = mat4Zero();
     mat.m00  = (near * 2.0) / (right - left);
@@ -156,13 +162,13 @@ MATHAPI mat4 mat4Frustum(const float left, const float right, const float top, c
     return (mat);
 }
 
+
 MATHAPI mat4 mat4Perspective(const float fieldOfView, const float aspect, const float near, const float far) {
     float top   = near * tan(fieldOfView * 0.5);
     float right = top * aspect;
     return (mat4Frustum(-right, right, top, -top, near, far));
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI mat4 mat4Translate(const vec3 v0) {
     return ((mat4) {{ 1.0,  0.0,  0.0,  0.0,
@@ -171,12 +177,14 @@ MATHAPI mat4 mat4Translate(const vec3 v0) {
                       v0.x, v0.y, v0.z, 1.0  }} );
 }
 
+
 MATHAPI mat4 mat4Scale(const vec3 v0) {
     return ((mat4) {{ v0.x, 0.0,  0.0,  0.0,
                       0.0,  v0.y, 0.0,  0.0,
                       0.0,  0.0,  v0.z, 0.0,
                       0.0,  0.0,  0.0,  1.0  }} );
 }
+
 
 MATHAPI mat4 mat4Rotate(const vec3 axis, const float angle) {
     float c = cos(angle);
@@ -205,6 +213,7 @@ MATHAPI mat4 mat4Rotate(const vec3 axis, const float angle) {
     return (m);
 }
 
+
 MATHAPI mat4 mat4RotateX(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
@@ -216,6 +225,7 @@ MATHAPI mat4 mat4RotateX(const float angle) {
     value.m22 = cosres;
     return (value);
 }
+
 
 MATHAPI mat4 mat4RotateY(const float angle) {
     float sinres = sin(angle),
@@ -229,6 +239,7 @@ MATHAPI mat4 mat4RotateY(const float angle) {
     return (value);
 }
 
+
 MATHAPI mat4 mat4RotateZ(const float angle) {
     float sinres = sin(angle),
           cosres = cos(angle);
@@ -240,6 +251,7 @@ MATHAPI mat4 mat4RotateZ(const float angle) {
     value.m11 = cosres;
     return (value);
 }
+
 
 MATHAPI mat4 mat4RotateV(const vec3 angle) {
     float sinx = sin(-angle.x), cosx = cos(-angle.x),
@@ -261,6 +273,7 @@ MATHAPI mat4 mat4RotateV(const vec3 angle) {
     return (value);
 }
 
+
 MATHAPI mat4 mat4RotateAt(const vec3 pivot, const vec3 axis, const float angle) {
     mat4 value = mat4Identity();
          value = mat4Mul(value, mat4Translate(pivot));
@@ -268,6 +281,7 @@ MATHAPI mat4 mat4RotateAt(const vec3 pivot, const vec3 axis, const float angle) 
 
     return (value);
 }
+
 
 MATHAPI mat4 mat4LookAt(const vec3 eye, const vec3 center, const vec3 up) {
     vec3 f, u, s;
@@ -287,8 +301,6 @@ MATHAPI mat4 mat4LookAt(const vec3 eye, const vec3 center, const vec3 up) {
     return (mat);
 }
 
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI float mat4Det(const mat4 m0) {
     float result = 0.0;
@@ -312,11 +324,9 @@ MATHAPI float mat4Det(const mat4 m0) {
     return (result);
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI const float *mat4Ptr(const mat4 *m0) { return (&m0->m00); }
 
-/* ---------------------------------------------------------------------------------------------------- */
 
 MATHAPI const char *mat4String(const mat4 m0) {
     static char buf[1024];
@@ -336,24 +346,31 @@ MATHAPI const char *mat4String(const mat4 m0) {
 # endif /* __cplusplus */
 #
 # if defined (__cplusplus)
-#  if !defined (MATH_DISABLE_CPP_OPERATORS)
+#  if !defined (MATHAPI_DISABLE_CPP_OPERATORS)
 
 MATHAPI mat4 operator + (const mat4 &v0, const mat4 &v1) { return (mat4Add(v0, v1)); }
 
+
 MATHAPI const mat4& operator += (mat4 &v0, const mat4 &v1) { return ((v0 = mat4Add(v0, v1))); }
+
 
 MATHAPI mat4 operator - (const mat4 &v0, const mat4 &v1)   { return (mat4Sub(v0, v1)); }
 
+
 MATHAPI const mat4& operator -= (mat4 &v0, const mat4 &v1) { return ((v0 = mat4Sub(v0, v1))); }
+
 
 MATHAPI mat4 operator * (const mat4 &v0, const mat4 &v1)   { return (mat4Mul(v0, v1)); }
 
+
 MATHAPI const mat4& operator *= (mat4 &v0, const mat4 &v1) { return ((v0 = mat4Mul(v0, v1))); }
+
 
 MATHAPI bool operator == (const mat4 &v0, const mat4 &v1) { return (mat4Equals(v0, v1)); }
 
+
 MATHAPI bool operator != (const mat4 &v0, const mat4 &v1) { return (!mat4Equals(v0, v1)); }
 
-#  endif /* MATH_DISABLE_CPP_OPERATORS */
+#  endif /* MATHAPI_DISABLE_CPP_OPERATORS */
 # endif /* __cplusplus */
 #endif /* _mat4_h_ */

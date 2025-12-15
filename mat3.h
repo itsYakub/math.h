@@ -9,6 +9,18 @@
 #if !defined (_mat3_h_)
 # define _mat3_h_ 1
 #
+# if !defined (MATHAPI_STATIC) && !defined (MATHAPI_EXTERN)
+#  define MATHAPI_EXTERN 1
+# endif /* MATHAPI_STATIC, MATHAPI_EXTERN */
+# if !defined (MATHAPI)
+#  if defined (MATHAPI_STATIC)
+#   define MATHAPI static inline
+#  endif /* MATHAPI_STATIC */
+#  if defined (MATHAPI_EXTERN)
+#   define MATHAPI extern
+#  endif /* MATHAPI_EXTERN */
+# endif /* MATHAPI */
+#
 # if !defined (__cplusplus)
 #  include <stdio.h>
 #  include <string.h>
@@ -18,10 +30,6 @@
 #  include <cstring>
 # endif /* __cplusplus */
 # include "./math.h"
-#
-# if !defined (MATHAPI)
-#  define MATHAPI static inline
-# endif /* MATHAPI */
 #
 # if defined (__cplusplus)
 

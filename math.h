@@ -9,8 +9,16 @@
 #if !defined (_math_h_)
 # define _math_h_ 1
 #
+# if !defined (MATHAPI_STATIC) && !defined (MATHAPI_EXTERN)
+#  define MATHAPI_EXTERN 1
+# endif /* MATHAPI_STATIC, MATHAPI_EXTERN */
 # if !defined (MATHAPI)
-#  define MATHAPI static inline
+#  if defined (MATHAPI_STATIC)
+#   define MATHAPI static inline
+#  endif /* MATHAPI_STATIC */
+#  if defined (MATHAPI_EXTERN)
+#   define MATHAPI extern
+#  endif /* MATHAPI_EXTERN */
 # endif /* MATHAPI */
 #
 # include "./common.h"
