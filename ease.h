@@ -71,7 +71,13 @@ MATHAPI float easeInBounce(float t);
 #
 # if defined (MATHAPI_IMPLEMENTATION)
 #
-# include "./common.h"
+#  include "./common.h"
+#
+#  if defined (__cplusplus)
+
+extern "C" {
+
+#  endif /* __cplusplus */
 
 MATHAPI float easeInSine(float t) { return (1.0 - cos((clamp01(t) * PI) / 2.0)); }
 
@@ -162,5 +168,10 @@ MATHAPI float easeOutBounce(float t) {
 
 MATHAPI float easeInBounce(float t) { return (1.0 - easeOutBounce(1.0 - clamp01(t))); }
 
+#  if defined (__cplusplus)
+
+}
+
+#  endif /* __cplusplus */
 # endif /* MATHAPI_IMPLEMENTATION */
 #endif /* _ease_h_ */
