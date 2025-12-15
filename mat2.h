@@ -98,14 +98,12 @@ extern "C" {
 
 #  endif /* __cplusplus */
 
-
 MATHAPI mat2 mat2Zero(void) {
     mat2 mat = {{ 0.0, 0.0,
                   0.0, 0.0  }};
 
     return (mat);
 }
-
 
 
 MATHAPI mat2 mat2Identity(void) {
@@ -116,14 +114,12 @@ MATHAPI mat2 mat2Identity(void) {
 }
 
 
-
 MATHAPI mat2 mat2Copy(const mat2 m0) {
     mat2 mat = {{ m0.m00, m0.m01,
                   m0.m10, m0.m11  }};
 
     return (mat);
 }
-
 
 
 MATHAPI mat2 mat2Add(const mat2 m0, const mat2 m1) {
@@ -138,7 +134,6 @@ MATHAPI mat2 mat2Add(const mat2 m0, const mat2 m1) {
 }
 
 
-
 MATHAPI mat2 mat2Sub(const mat2 m0, const mat2 m1) {
     mat2 mat;
 
@@ -151,7 +146,6 @@ MATHAPI mat2 mat2Sub(const mat2 m0, const mat2 m1) {
 }
 
 
-
 MATHAPI mat2 mat2Mul(const mat2 m0, const mat2 m1) {
     mat2 mat;
 
@@ -162,7 +156,6 @@ MATHAPI mat2 mat2Mul(const mat2 m0, const mat2 m1) {
     mat.m11 = m0.m01 * m1.m10 + m0.m11 * m1.m11;
     return (mat);
 }
-
 
 
 MATHAPI mat2 mat2Mulf(const mat2 m0, const float f) {
@@ -178,7 +171,8 @@ MATHAPI mat2 mat2Mulf(const mat2 m0, const float f) {
 
 
 MATHAPI int mat2Equals(const mat2 m0, const mat2 m1) {
-    return (vec2Equals(m0.m0, m1.m0))
+    return (m0.m00 == m1.m00 && m0.m01 == m1.m01 &&
+            m0.m10 == m1.m10 && m0.m11 == m1.m11);
 }
 
 
