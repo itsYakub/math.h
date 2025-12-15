@@ -258,22 +258,34 @@ MATHAPI double _atod(const char *);
 # if defined (MATHAPI_IMPLEMENTATION)
 
 
-MATHAPI float _abs(const float f0) { return (f0 < 0.0 ? -f0 : f0); }
+MATHAPI float _abs(const float f0) {
+    return (f0 < 0.0 ? -f0 : f0);
+}
 
 
-MATHAPI float _trunc(const float f0) { return (f0 - (long) f0); }
+MATHAPI float _trunc(const float f0) {
+    return (f0 - (long) f0);
+}
 
 
-MATHAPI float _mod(const float f0, const float f1) { return (f0 - (long) (f0 / f1) * f1); }
+MATHAPI float _mod(const float f0, const float f1) {
+    return (f0 - (long) (f0 / f1) * f1);
+}
 
 
-MATHAPI float _ceil(const float f0) { return ((long) f0 + 1.0); }
+MATHAPI float _ceil(const float f0) {
+    return ((long) f0 + 1.0);
+}
 
 
-MATHAPI float _floor(const float f0) { return ((long) f0); }
+MATHAPI float _floor(const float f0) {
+    return ((long) f0);
+}
 
 
-MATHAPI float _round(const float f0) { return (_trunc(f0) < 0.5 ? _floor(f0) : _ceil(f0)); }
+MATHAPI float _round(const float f0) {
+    return (_trunc(f0) < 0.5 ? _floor(f0) : _ceil(f0));
+}
 
 
 MATHAPI size_t _fact(size_t v0) {
@@ -312,7 +324,7 @@ MATHAPI float _exp(const float f0) {
 }
 
 
-MATHAPI float _logn(const float f0) {
+MATHAPI float _ln(const float f0) {
     float f1 = f0 - 1.0,
           f2 = f1;
 
@@ -324,7 +336,9 @@ MATHAPI float _logn(const float f0) {
 }
 
 
-MATHAPI float _log(const float f0, const float f1) { return (_logn(f0) / _logn(f1)); }
+MATHAPI float _log(const float f0, const float f1) {
+    return (_ln(f0) / _ln(f1));
+}
 
 
 MATHAPI float _pow(const float f0, const float f1) {
@@ -342,7 +356,9 @@ MATHAPI float _pow(const float f0, const float f1) {
 }
 
 
-MATHAPI float _pow2(const float f0) { return (f0 * f0); }
+MATHAPI float _pow2(const float f0) {
+    return (f0 * f0);
+}
 
 
 MATHAPI float _sqrt(const float f0) {
@@ -364,13 +380,19 @@ MATHAPI float _sqrt(const float f0) {
 }
 
 
-MATHAPI float _dot(const float f0, const float f1) { return (f0 * f1); }
+MATHAPI float _dot(const float f0, const float f1) {
+    return (f0 * f1);
+}
 
 
-MATHAPI float _degToRad(const float f0) { return (f0 * (PI / 180.0)); }
+MATHAPI float _degToRad(const float f0) {
+    return (f0 * (PI / 180.0));
+}
 
 
-MATHAPI float _radToDeg(const float f0) { return (f0 * (180.0 / PI)); }
+MATHAPI float _radToDeg(const float f0) {
+    return (f0 * (180.0 / PI));
+}
 
 
 MATHAPI float _sin(float f0) {
@@ -390,13 +412,19 @@ MATHAPI float _sin(float f0) {
 }
 
 
-MATHAPI float _cos(float f0) { return (_sin(_degToRad(90.0) - f0)); }
+MATHAPI float _cos(float f0) {
+    return (_sin(_degToRad(90.0) - f0));
+}
 
 
-MATHAPI float _tan(float f0) { return (_sin(f0) / _cos(f0)); }
+MATHAPI float _tan(float f0) {
+    return (_sin(f0) / _cos(f0));
+}
 
 
-MATHAPI float _cot(float f0) { return (1.0 / _tan(f0)); }
+MATHAPI float _cot(float f0) {
+    return (1.0 / _tan(f0));
+}
 
 
 MATHAPI float _asin(float f0) {
@@ -417,10 +445,14 @@ MATHAPI float _asin(float f0) {
 }
 
 
-MATHAPI float _acos(float f0) { return (PI / 2.0 - _asin(f0)); }
+MATHAPI float _acos(float f0) {
+    return (PI / 2.0 - _asin(f0));
+}
 
 
-MATHAPI float _atan(float f0) { return (_asin(f0 / _sqrt(1.0 + f0 * f0))); }
+MATHAPI float _atan(float f0) {
+    return (_asin(f0 / _sqrt(1.0 + f0 * f0)));
+}
 
 
 MATHAPI float _atan2(float f0, float f1) {
@@ -437,7 +469,9 @@ MATHAPI float _atan2(float f0, float f1) {
 }
 
 
-MATHAPI float _acot(float f0) { return (PI / 2.0 - _atan(f0)); }
+MATHAPI float _acot(float f0) {
+    return (PI / 2.0 - _atan(f0));
+}
 
 
 MATHAPI float _clamp(const float f0, const float min, const float max) {
@@ -458,7 +492,9 @@ MATHAPI float _clamp01(const float f0) { return (_clamp(f0, 0.0, 1.0)); }
 # endif /* isdigit */
 
 
-MATHAPI signed int _atou(const char *str) { return ((unsigned int) _atoi(str)); }
+MATHAPI signed int _atou(const char *str) {
+    return ((unsigned int) _atoi(str));
+}
 
 
 MATHAPI signed int _atoi(const char *str) {
@@ -483,7 +519,9 @@ MATHAPI signed int _atoi(const char *str) {
 }
 
 
-MATHAPI float _atof(const char *str) { return ((float) _atod(str)); }
+MATHAPI float _atof(const char *str) {
+    return ((float) _atod(str));
+}
 
 
 MATHAPI double _atod(const char *str) {
