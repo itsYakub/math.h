@@ -153,62 +153,62 @@ extern "C" {
 #  endif /* __cplusplus */
 
 MATHAPI vec4 vec4Init(const float x, const float y, const float z, const float w) {
-    return ((vec4) { .x = x, .y = y, .z = z, .w = w } );
+    return ((vec4) {{ .x = x, .y = y, .z = z, .w = w }} );
 }
 
 
 MATHAPI vec4 vec4Copy(const vec4 v0) {
-    return ((vec4) { .x = v0.x, .y = v0.y, .z = v0.z, .w = v0.w } );
+    return ((vec4) {{ .x = v0.x, .y = v0.y, .z = v0.z, .w = v0.w }} );
 }
 
 
 MATHAPI vec4 vec4Zero(void) {
-    return ((vec4) { 0.0, 0.0, 0.0, 0.0 } );
+    return ((vec4) {{ 0.0, 0.0, 0.0, 0.0 }} );
 }
 
 
 MATHAPI vec4 vec4One(void) {
-    return ((vec4) { 1.0, 1.0, 1.0, 1.0 } );
+    return ((vec4) {{ 1.0, 1.0, 1.0, 1.0 }} );
 }
 
 
 MATHAPI vec4 vec4Add(const vec4 v0, const vec4 v1) {
-    return ((vec4) { v0.x + v1.x, v0.y + v1.y, v0.z + v1.z, v0.w + v1.w } );
+    return ((vec4) {{ v0.x + v1.x, v0.y + v1.y, v0.z + v1.z, v0.w + v1.w }} );
 }
 
 
 MATHAPI vec4 vec4Addf(const vec4 v0, const float f) {
-    return ((vec4) { v0.x + f, v0.y + f, v0.z + f, v0.w + f } );
+    return ((vec4) {{ v0.x + f, v0.y + f, v0.z + f, v0.w + f }} );
 }
 
 
 MATHAPI vec4 vec4Sub(const vec4 v0, const vec4 v1) {
-    return ((vec4) { v0.x - v1.x, v0.y - v1.y, v0.z - v1.z, v0.w - v1.w } );
+    return ((vec4) {{ v0.x - v1.x, v0.y - v1.y, v0.z - v1.z, v0.w - v1.w }} );
 }
 
 
 MATHAPI vec4 vec4Subf(const vec4 v0, const float f) {
-    return ((vec4) { v0.x - f, v0.y - f, v0.z - f, v0.w - f } );
+    return ((vec4) {{ v0.x - f, v0.y - f, v0.z - f, v0.w - f }} );
 }
 
 
 MATHAPI vec4 vec4Mul(const vec4 v0, const vec4 v1) {
-    return ((vec4) { v0.x * v1.x, v0.y * v1.y, v0.z * v1.z, v0.w * v1.w } );
+    return ((vec4) {{ v0.x * v1.x, v0.y * v1.y, v0.z * v1.z, v0.w * v1.w }} );
 }
 
 
 MATHAPI vec4 vec4Mulf(const vec4 v0, const float f) {
-    return ((vec4) { v0.x * f, v0.y * f, v0.z * f, v0.w * f } );
+    return ((vec4) {{ v0.x * f, v0.y * f, v0.z * f, v0.w * f }} );
 }
 
 
 MATHAPI vec4 vec4Div(const vec4 v0, const vec4 v1) {
-    return ((vec4) { v0.x / v1.x, v0.y / v1.y, v0.z / v1.z, v0.w / v1.w } );
+    return ((vec4) {{ v0.x / v1.x, v0.y / v1.y, v0.z / v1.z, v0.w / v1.w }} );
 }
 
 
 MATHAPI vec4 vec4Divf(const vec4 v0, const float f) {
-    return ((vec4) { v0.x / f, v0.y / f, v0.z / f, v0.w / f } );
+    return ((vec4) {{ v0.x / f, v0.y / f, v0.z / f, v0.w / f }} );
 }
 
 
@@ -218,32 +218,32 @@ MATHAPI int vec4Equals(const vec4 v0, const vec4 v1) {
 
 
 MATHAPI vec4 vec4Pow(const vec4 v0, float f) {
-    return ((vec4) { pow(v0.x, f), pow(v0.y, f), pow(v0.z, f), pow(v0.w, f) } );
+    return ((vec4) {{ pow(v0.x, f), pow(v0.y, f), pow(v0.z, f), pow(v0.w, f) }} );
 }
 
 
 MATHAPI vec4 vec4Pow2(const vec4 v0) {
-    return ((vec4) { v0.x * v0.x, v0.y * v0.y, v0.z * v0.z, v0.w * v0.w } );
+    return ((vec4) {{ v0.x * v0.x, v0.y * v0.y, v0.z * v0.z, v0.w * v0.w }} );
 }
 
 
 MATHAPI vec4 vec4Sqrt(const vec4 v0) {
-    return ((vec4) { sqrt(v0.x), sqrt(v0.y), sqrt(v0.z), sqrt(v0.w) } );
+    return ((vec4) {{ sqrt(v0.x), sqrt(v0.y), sqrt(v0.z), sqrt(v0.w) }} );
 }
 
 
 MATHAPI vec4 vec4Clamp(const vec4 v0, const vec4 min, const vec4 max) {
-    return ((vec4) { clamp(v0.x, min.x, max.x), clamp(v0.y, min.y, max.y), clamp(v0.z, min.z, max.z), clamp(v0.w, min.w, max.w) } );
+    return ((vec4) {{ clamp(v0.x, min.x, max.x), clamp(v0.y, min.y, max.y), clamp(v0.z, min.z, max.z), clamp(v0.w, min.w, max.w) }} );
 }
 
 
 MATHAPI vec4 vec4Clampf(const vec4 v0, float min, float max) {
-    return ((vec4) { clamp(v0.x, min, max), clamp(v0.y, min, max), clamp(v0.z, min, max), clamp(v0.w, min, max) } );
+    return ((vec4) {{ clamp(v0.x, min, max), clamp(v0.y, min, max), clamp(v0.z, min, max), clamp(v0.w, min, max) }} );
 }
 
 
 MATHAPI vec4 vec4Clamp01(const vec4 v0) {
-    return ((vec4) { clamp01(v0.x), clamp01(v0.y), clamp01(v0.z), clamp01(v0.w) } );
+    return ((vec4) {{ clamp01(v0.x), clamp01(v0.y), clamp01(v0.z), clamp01(v0.w) }} );
 }
 
 
@@ -273,7 +273,7 @@ MATHAPI vec4 vec4Normalize(const vec4 v0) {
 
 
 MATHAPI vec4 vec4Scale(const vec4 v0, const float f) {
-    return (vec4Mulf(v0, f0));
+    return (vec4Mulf(v0, f));
 }
 
 #  if defined (__cplusplus)

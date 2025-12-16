@@ -21,8 +21,8 @@
 #  endif /* MATHAPI_EXTERN */
 # endif /* MATHAPI */
 #
-# include "./common.h"
 # include "./struct.h"
+# include "./common.h"
 # include "./vec2.h"
 # include "./vec3.h"
 # include "./vec4.h"
