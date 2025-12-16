@@ -357,7 +357,7 @@ MATHAPI float __floor(const float f0) {
 
 
 MATHAPI float __round(const float f0) {
-    return (_trunc(f0) < 0.5 ? __floor(f0) : __ceil(f0));
+    return (__trunc(f0) < 0.5 ? __floor(f0) : __ceil(f0));
 }
 
 
@@ -404,13 +404,13 @@ MATHAPI float __ln(const float f0) {
     do {
         f1 = f2;
         f2 = f1 + 2.0 * (f0 - __exp(f1)) / (f0 + __exp(f1));
-    } while (_abs(f1 - f2) > EPSILON);
+    } while (__abs(f1 - f2) > EPSILON);
     return (f2);
 }
 
 
 MATHAPI float __log(const float f0, const float f1) {
-    return (_ln(f0) / __ln(f1));
+    return (__ln(f0) / __ln(f1));
 }
 
 
@@ -425,7 +425,7 @@ MATHAPI float __pow(const float f0, const float f1) {
         return (value);
     }
 
-    return (_exp(f1 * __ln(f0)));
+    return (__exp(f1 * __ln(f0)));
 }
 
 
@@ -475,8 +475,8 @@ MATHAPI float __sin(float f0) {
     
     float value = 0.0;
     for (size_t n = 0 ;; n++) {
-        float t = (_pow(-1.0, n) / __fact(2.0 * n + 1.0)) * __pow(f0, 2.0 * n + 1.0);
-        if (_abs(t) < EPSILON) { break; }
+        float t = (__pow(-1.0, n) / __fact(2.0 * n + 1.0)) * __pow(f0, 2.0 * n + 1.0);
+        if (__abs(t) < EPSILON) { break; }
 
         value += t;
     }
@@ -486,12 +486,12 @@ MATHAPI float __sin(float f0) {
 
 
 MATHAPI float __cos(float f0) {
-    return (_sin(_degToRad(90.0) - f0));
+    return (__sin(__degToRad(90.0) - f0));
 }
 
 
 MATHAPI float __tan(float f0) {
-    return (_sin(f0) / __cos(f0));
+    return (__sin(f0) / __cos(f0));
 }
 
 
@@ -524,15 +524,15 @@ MATHAPI float __acos(float f0) {
 
 
 MATHAPI float __atan(float f0) {
-    return (_asin(f0 / __sqrt(1.0 + f0 * f0)));
+    return (__asin(f0 / __sqrt(1.0 + f0 * f0)));
 }
 
 
 MATHAPI float __atan2(float f0, float f1) {
-    if (f1 > 0.0)       { return (_atan(f0 / f1)); }
+    if (f1 > 0.0)       { return (__atan(f0 / f1)); }
     else if (f1 < 0.0)  {
-        if (f0 >= 0.0)  { return (_atan(f0 / f1) + PI); }
-        if (f0 < 0.0)   { return (_atan(f0 / f1) - PI); }
+        if (f0 >= 0.0)  { return (__atan(f0 / f1) + PI); }
+        if (f0 < 0.0)   { return (__atan(f0 / f1) - PI); }
     }
     else if (f1 == 0.0) {
         if (f0 > 0.0)   { return (PI / 2.0); }
@@ -554,7 +554,7 @@ MATHAPI float __clamp(const float f0, const float min, const float max) {
 }
 
 
-MATHAPI float __clamp01(const float f0) { return (_clamp(f0, 0.0, 1.0)); }
+MATHAPI float __clamp01(const float f0) { return (__clamp(f0, 0.0, 1.0)); }
 
 
 #  if !defined (isspace)
@@ -641,8 +641,8 @@ MATHAPI int __isbe(void) {
 
 
 MATHAPI short __pack16(const char s[2]) {
-    if (_isle()) { return (_pack16le(s)); }
-            else { return (_pack16le(s)); }
+    if (__isle()) { return (__pack16le(s)); }
+            else { return (__pack16le(s)); }
 }
 
 
@@ -665,8 +665,8 @@ MATHAPI short __pack16be(const char s[2]) {
 
 
 MATHAPI int __pack32(const char i[4]) {
-    if (_isle()) { return (_pack32le(i)); }
-            else { return (_pack32be(i)); }
+    if (__isle()) { return (__pack32le(i)); }
+            else { return (__pack32be(i)); }
 }
 
 
@@ -693,8 +693,8 @@ MATHAPI int __pack32be(const char i[4]) {
 
 
 MATHAPI long long int __pack64(const char ll[8]) {
-    if (_isle()) { return (_pack64le(ll)); }
-            else { return (_pack64be(ll)); }
+    if (__isle()) { return (__pack64le(ll)); }
+            else { return (__pack64be(ll)); }
 }
 
 
