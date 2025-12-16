@@ -22,12 +22,6 @@
 #  endif /* MATHAPI_EXTERN */
 # endif /* MATHAPI */
 #
-# if !defined (__cplusplus)
-#  include <stddef.h>
-# else
-#  include <cstddef>
-# endif /* __cplusplus */
-#
 # if !defined (E)
 #  define E 2.718281828459
 # endif /* E */
@@ -68,7 +62,7 @@ MATHAPI float _floor(const float);
 MATHAPI float _round(const float);
 
 
-MATHAPI size_t _fact(size_t);
+MATHAPI long long _fact(long long);
 
 
 MATHAPI float _min(const float, const float);
@@ -148,6 +142,38 @@ MATHAPI float _atof(const char *);
 
 MATHAPI double _atod(const char *);
 
+
+MATHAPI int _isle(void);
+
+
+MATHAPI int _isbe(void);
+
+
+MATHAPI short _pack16(const char [2]);
+
+
+MATHAPI short  _pack16le(const char [2]);
+
+
+MATHAPI short _pack16be(const char [2]);
+
+
+MATHAPI int _pack32(const char [4]);
+
+
+MATHAPI int _pack32le(const char [4]);
+
+
+MATHAPI int _pack32be(const char [4]);
+
+
+MATHAPI long long _pack64(const char [8]);
+
+
+MATHAPI long long _pack64le(const char [8]);
+
+
+MATHAPI long long _pack64be(const char [8]);
 
 # if !defined (abs)
 #  define abs(x)         _abs(x)
@@ -248,7 +274,40 @@ MATHAPI double _atod(const char *);
 # if !defined (atof)
 #  define atof(s)        _atof(s)
 # endif /* atof */
-
+# if !defined (isle)
+#  define isle           _isle
+# endif /* isle */
+# if !defined (isbe)
+#  define isbe           _isbe
+# endif /* isbe */
+# if !defined (pack16)
+#  define pack16(s)      _pack16(s)
+# endif /* pack16 */
+# if !defined (pack16le)
+#  define pack16le(s)    _pack16le(s)
+# endif /* pack16le */
+# if !defined (pack16be)
+#  define pack16be(s)    _pack16be(s)
+# endif /* pack16be */
+# if !defined (pack32)
+#  define pack32(s)      _pack32(s)
+# endif /* pack32 */
+# if !defined (pack32le)
+#  define pack32le(i)    _pack32le(i)
+# endif /* pack32le */
+# if !defined (pack32be)
+#  define pack32be(i)    _pack32be(i)
+# endif /* pack32le */
+# if !defined (pack64)
+#  define pack64(l)      _pack16(l)
+# endif /* pack64 */
+# if !defined (pack64le)
+#  define pack64le(l)    _pack64le(l)
+# endif /* pack64be */
+# if !defined (pack64be)
+#  define pack64be(l)    _pack64be(l)
+# endif /* pack64be */
+#
 # if defined (__cplusplus)
 
 }
@@ -256,6 +315,20 @@ MATHAPI double _atod(const char *);
 # endif /* __cplusplus */
 #
 # if defined (MATHAPI_IMPLEMENTATION)
+#
+# if !defined (__cplusplus)
+#  include <stddef.h>
+#  include <stdint.h>
+# else
+#  include <cstddef>
+#  include <cstdint>
+# endif /* __cplusplus */
+#
+# if defined (__cplusplus)
+
+extern "C" {
+
+# endif /* __cplusplus */
 
 
 MATHAPI float _abs(const float f0) {
@@ -288,11 +361,11 @@ MATHAPI float _round(const float f0) {
 }
 
 
-MATHAPI size_t _fact(size_t v0) {
+MATHAPI long long _fact(long long v0) {
     if ((long long) v0 < 0) { return (0); }
     else if (!v0) { return (1); }
 
-    size_t value = 1.0;
+    long long value = 1.0;
     while (v0) { value *= v0, v0--; }
 
     return (value);
@@ -552,8 +625,76 @@ MATHAPI double _atod(const char *str) {
     return ((value + fraction) * sign);
 }
 
+
+MATHAPI int _isle(void) {
+    union { uint32_t i; uint8_t c[4]; } e = { 0x01000000 };
+
+    return (e.c[0] == 0);
+}
+
+
+MATHAPI int _isbe(void) {
+    union { uint32_t i; uint8_t c[4]; } e = { 0x01000000 };
+
+    return (e.c[0] == 1);
+}
+
+
+MATHAPI short _pack16(const char s[2]) {
+    if (_isle()) { return (_pack16le(s)); }
+            else { return (_pack16le(s)); }
+}
+
+
+MATHAPI short  _pack16le(const char s[2]) {
+
+}
+
+
+MATHAPI short _pack16be(const char s[2]) {
+
+}
+
+
+MATHAPI int _pack32(const char i[4]) {
+    if (_isle()) { return (_pack32le(i)); }
+            else { return (_pack32be(i)); }
+}
+
+
+MATHAPI int _pack32le(const char i[4]) {
+
+}
+
+
+MATHAPI int _pack32be(const char i[4]) {
+
+}
+
+
+MATHAPI long long _pack64(const char ll[8]) {
+    if (_isle()) { return (_pack64le(ll)); }
+            else { return (_pack64be(ll)); }
+}
+
+
+MATHAPI long long _pack64le(const char ll[8]) {
+
+}
+
+
+MATHAPI long long _pack64be(const char ll[8]) {
+
+}
+
 # undef isspace
 # undef isdigit
+#
+# if defined (__cplusplus)
+
+}
+
+# endif /* __cplusplus */
 #
 # endif /* MATHAPI_IMPLEMENTATION */
 #endif /* _common_h_ */
